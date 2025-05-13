@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Liste des Salles{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1 class="display-4 mb-3">Salles Disponibles</h1>
+        <p class="lead text-muted">Trouvez et réservez la salle parfaite pour votre événement.</p>
+    </div>
+    <div class="col-md-4">
+        <form method="get" class="search-form">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Rechercher une salle..." value="{{ request.GET.search }}">
+                <button class="btn btn-gradient" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="get" class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Capacité minimale</label>
+                        <input type="number" name="min_capacity" class="form-control" min="1" value="{{ request.GET.min_capacity }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Prix maximum (DH)</label>
+                        <input type="number" name="max_price" class="form-control" min="0" value="{{ request.GET.max_price }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Disponibilité</label>
+                        <select name="availability" class="form-select">
+                            <option value="">Tous</option>
+                            <option value="available" {% if request.GET.availability == 'available' %}selected{% endif %}>Disponible</option>
+                            <option value="occupied" {% if request.GET.availability == 'occupied' %}selected{% endif %}>Occupé</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-gradient w-100">
+                            <i class="fas fa-filter me-2"></i>Filtrer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {% if rooms %}
+        {% for room in rooms %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card room-card h-100">
+                    {% if room.image %}
+                        <img src="{{ room.image.url }}" class="card-img-top" alt="{{ room.name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-image fa-3x text-muted"></i>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ room.name }}</h5>
+                        <p class="card-text text-muted">{{ room.description|truncatewords:20 }}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-primary">
+                                <i class="fas fa-users me-1"></i>{{ room.capacity }} personnes
+                            </span>
+                            <span class="badge {% if room.is_available %}bg-success{% else %}bg-danger{% endif %}">
+                                {% if room.is_available %}
+                                    <i class="fas fa-check-circle me-1"></i>Disponible
+                                {% else %}
+                                    <i class="fas fa-times-circle me-1"></i>Occupé
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">
+                                <i class="fas fa-money-bill-wave me-1"></i>{{ room.price_per_hour }} DH/heure
+                            </h6>
+                            <a href="{% url 'rooms:room_detail' room.id %}" class="btn btn-gradient">
+                                <i class="fas fa-info-circle me-1"></i>Détails
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                <i class="fas fa-info-circle me-2"></i>Aucune salle ne correspond à vos critères de recherche.
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% if is_paginated %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.min_capacity %}&min_capacity={{ request.GET.min_capacity }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.availability %}&availability={{ request.GET.availability }}{% endif %}">
+                        <i class="fas fa-angle-double-left"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.min_capacity %}&min_capacity={{ request.GET.min_capacity }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.availability %}&availability={{ request.GET.availability }}{% endif %}">
+                        <i class="fas fa-angle-left"></i>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.min_capacity %}&min_capacity={{ request.GET.min_capacity }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.availability %}&availability={{ request.GET.availability }}{% endif %}">
+                            {{ num }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.min_capacity %}&min_capacity={{ request.GET.min_capacity }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.availability %}&availability={{ request.GET.availability }}{% endif %}">
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.min_capacity %}&min_capacity={{ request.GET.min_capacity }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.availability %}&availability={{ request.GET.availability }}{% endif %}">
+                        <i class="fas fa-angle-double-right"></i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+{% endblock %}

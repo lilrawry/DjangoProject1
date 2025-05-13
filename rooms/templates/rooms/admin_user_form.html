@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin-users.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">
+            <i class="fas fa-user me-2"></i>{{ title }}
+        </h1>
+        <div class="dashboard-actions">
+            <a href="{% url 'rooms:manage_users' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i>Retour à la liste
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                            {{ form.username }}
+                            <div class="invalid-feedback">{{ form.username.errors.as_text }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                            {{ form.email }}
+                            <div class="invalid-feedback">{{ form.email.errors.as_text }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.first_name.id_for_label }}" class="form-label">Prénom</label>
+                            {{ form.first_name }}
+                            <div class="invalid-feedback">{{ form.first_name.errors.as_text }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.last_name.id_for_label }}" class="form-label">Nom</label>
+                            {{ form.last_name }}
+                            <div class="invalid-feedback">{{ form.last_name.errors.as_text }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if form.password1 %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.password1.id_for_label }}" class="form-label">Mot de passe</label>
+                            {{ form.password1 }}
+                            <div class="invalid-feedback">{{ form.password1.errors.as_text }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.password2.id_for_label }}" class="form-label">Confirmation du mot de passe</label>
+                            {{ form.password2 }}
+                            <div class="invalid-feedback">{{ form.password2.errors.as_text }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="mb-3 form-check">
+                    {{ form.is_active }}
+                    <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
+                        Actif
+                    </label>
+                </div>
+
+                <div class="mb-3 form-check">
+                    {{ form.is_staff }}
+                    <label class="form-check-label" for="{{ form.is_staff.id_for_label }}">
+                        Staff
+                    </label>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{% url 'rooms:manage_users' %}" class="btn btn-secondary">
+                        <i class="fas fa-times me-1"></i>Annuler
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-1"></i>Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Form validation
+document.addEventListener('DOMContentLoaded', function() {
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+});
+</script>
+{% endblock %}

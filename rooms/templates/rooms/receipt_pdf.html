@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Reçu de paiement #{{ payment.id }}</title>
+    <style>
+        @page {
+            size: a4 portrait;
+            margin: 2cm;
+        }
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            color: #333;
+            line-height: 1.5;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            max-width: 200px;
+            height: auto;
+        }
+        .receipt-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4e73df;
+            margin: 20px 0;
+        }
+        .receipt-number {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .divider {
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4e73df;
+            margin-bottom: 10px;
+        }
+        .info-block {
+            margin-bottom: 15px;
+        }
+        .info-block p {
+            margin: 5px 0;
+        }
+        .label {
+            font-weight: bold;
+            color: #666;
+        }
+        .value {
+            margin-left: 5px;
+        }
+        .amount {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4e73df;
+        }
+        .payment-details {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .contact {
+            font-size: 12px;
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+        }
+        .footer {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+        }
+        .footer-logo {
+            max-width: 100px;
+            opacity: 0.5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #f2f5ff;
+            color: #4e73df;
+            font-weight: bold;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .qr-code {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{{ logo_url }}" class="logo" alt="Espace Medina Logo">
+        <h1 class="receipt-title">Reçu de Paiement</h1>
+        <div class="receipt-number">Reçu N° {{ payment.id }}</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+        <div class="section-title">Informations Client</div>
+        <div class="info-block">
+            <p><span class="label">Client:</span> <span class="value">{{ payment.reservation.user.first_name }} {{ payment.reservation.user.last_name }}</span></p>
+            <p><span class="label">Email:</span> <span class="value">{{ payment.reservation.user.email }}</span></p>
+            <p><span class="label">Date d'émission:</span> <span class="value">{{ today|date:"d/m/Y" }}</span></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Détails de la Réservation</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Horaire</th>
+                    <th class="text-right">Montant</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Réservation de {{ payment.reservation.room.name }}</td>
+                    <td>{{ payment.reservation.start_time|date:"d/m/Y" }}</td>
+                    <td>{{ payment.reservation.start_time|time:"H:i" }} - {{ payment.reservation.end_time|time:"H:i" }}</td>
+                    <td class="text-right">{{ payment.amount }} DH</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section payment-details">
+        <div class="section-title">Détails du Paiement</div>
+        <div class="info-block">
+            <p><span class="label">Méthode de paiement:</span> 
+                <span class="value">
+                    {% if payment.payment_method == 'credit_card' %}
+                        Carte de crédit
+                    {% elif payment.payment_method == 'paypal' %}
+                        PayPal
+                    {% elif payment.payment_method == 'bank_transfer' %}
+                        Virement bancaire
+                    {% else %}
+                        Espèces
+                    {% endif %}
+                </span>
+            </p>
+            <p><span class="label">Date du paiement:</span> <span class="value">{{ payment.payment_date|date:"d/m/Y H:i" }}</span></p>
+            <p><span class="label">ID de transaction:</span> <span class="value">{{ payment.transaction_id }}</span></p>
+            <p><span class="label">Statut:</span> <span class="value">Payé</span></p>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+        <div class="text-right">
+            <div class="label">Montant Total:</div>
+            <div class="amount">{{ payment.amount }} DH</div>
+        </div>
+    </div>
+
+    <div class="contact">
+        <p>Pour toute question concernant ce reçu, veuillez contacter notre service client:</p>
+        <p>Email: contact@espacemedina.ma | Téléphone: +212 5XX-XXXXXX</p>
+    </div>
+
+    <div class="footer">
+        <p>Espace Medina - Système de réservation de salles</p>
+        <p>© {{ today|date:"Y" }} Espace Medina. Tous droits réservés.</p>
+    </div>
+</body>
+</html>

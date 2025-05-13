@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}{{ room.name }} - Détails{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            {% if room.image %}
+                <img src="{{ room.image.url }}" class="card-img-top" alt="{{ room.name }}" style="max-height: 400px; object-fit: cover;">
+            {% endif %}
+            <div class="card-body">
+                <h1 class="card-title display-5 mb-4">{{ room.name }}</h1>
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    <span class="badge bg-primary">
+                        <i class="fas fa-users me-1"></i>{{ room.capacity }} personnes
+                    </span>
+                    <span class="badge {% if room.is_available %}bg-success{% else %}bg-danger{% endif %}">
+                        {% if room.is_available %}
+                            <i class="fas fa-check-circle me-1"></i>Disponible
+                        {% else %}
+                            <i class="fas fa-times-circle me-1"></i>Occupé
+                        {% endif %}
+                    </span>
+                    <span class="badge bg-info">
+                        <i class="fas fa-money-bill-wave me-1"></i>{{ room.price_per_hour }} DH/heure
+                    </span>
+                </div>
+                <p class="card-text lead mb-4">{{ room.description }}</p>
+                
+                {% if room.amenities %}
+                <div class="row g-4">
+                    <div class="col-md-12">
+                        <h5 class="mb-3"><i class="fas fa-list-ul me-2"></i>Équipements</h5>
+                        <ul class="list-group list-group-flush">
+                            {% for amenity in room.amenities %}
+                            <li class="list-group-item">
+                                <i class="fas fa-check me-2"></i>{{ amenity }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card sticky-top" style="top: 2rem;">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Réserver cette salle</h4>
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'rooms:create_reservation' %}" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <input type="hidden" name="room" value="{{ room.id }}">
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Date et heure de début</label>
+                            <input type="datetime-local" name="start_time" class="form-control" required 
+                                   min="{{ min_date_time|date:'Y-m-d\TH:i' }}">
+                            <div class="invalid-feedback">
+                                Veuillez choisir une date et heure de début valides.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Date et heure de fin</label>
+                            <input type="datetime-local" name="end_time" class="form-control" required 
+                                   min="{{ min_date_time|date:'Y-m-d\TH:i' }}">
+                            <div class="invalid-feedback">
+                                Veuillez choisir une date et heure de fin valides.
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Prix:</strong> {{ room.price_per_hour }} DH/heure
+                                <div id="totalPrice" class="mt-2 fw-bold">Total: 0 DH</div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-calendar-check me-2"></i>Réserver maintenant
+                        </button>
+                    </form>
+                {% else %}
+                    <div class="alert alert-info" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>Veuillez vous <a href="{% url 'login' %}?next={{ request.path }}" class="alert-link">connecter</a> pour réserver cette salle.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    if (!form) return;  // Exit if form not found
+    
+    const startTimeInput = form.querySelector('[name="start_time"]');
+    const endTimeInput = form.querySelector('[name="end_time"]');
+    const totalPriceElement = document.getElementById('totalPrice');
+    const pricePerHour = parseFloat('{{ room.price_per_hour }}');
+
+    function calculateTotalPrice() {
+        if (!startTimeInput.value || !endTimeInput.value) return;
+
+        const start = new Date(startTimeInput.value);
+        const end = new Date(endTimeInput.value);
+        
+        if (end > start) {
+            const diffHours = (end - start) / (1000 * 60 * 60);
+            const total = (diffHours * pricePerHour).toFixed(2);
+            totalPriceElement.innerHTML = `Total: ${total} DH`;
+        } else {
+            totalPriceElement.innerHTML = 'Total: 0 DH';
+        }
+    }
+
+    function validateForm(e) {
+        if (!form.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+        }
+
+        const start = new Date(startTimeInput.value);
+        const end = new Date(endTimeInput.value);
+
+        if (end <= start) {
+            e.preventDefault();
+            alert("L'heure de fin doit être après l'heure de début");
+            return;
+        }
+
+        const diffHours = (end - start) / (1000 * 60 * 60);
+        if (diffHours < 1) {
+            e.preventDefault();
+            alert("La durée minimale de réservation est d'une heure");
+            return;
+        }
+
+        form.classList.add('was-validated');
+    }
+
+    startTimeInput.addEventListener('change', calculateTotalPrice);
+    endTimeInput.addEventListener('change', calculateTotalPrice);
+    form.addEventListener('submit', validateForm);
+
+    // Set minimum datetime to current time
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 5); // Add 5 minutes buffer
+    const minDateTime = now.toISOString().slice(0, 16);
+    startTimeInput.min = minDateTime;
+    endTimeInput.min = minDateTime;
+});
+</script>
+{% endblock %}

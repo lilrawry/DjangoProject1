@@ -1,0 +1,710 @@
+ERROR 2025-04-23 21:07:56,393 views 2892 18464 Error in create_reservation view: unsupported operand type(s) for *: 'decimal.Decimal' and 'float'
+ERROR 2025-04-23 21:07:56,488 log 2892 18464 Internal Server Error: /rooms/reserve/
+ERROR 2025-04-23 21:07:56,490 basehttp 2892 18464 "POST /rooms/reserve/?room=85 HTTP/1.1" 500 0
+ERROR 2025-04-25 11:02:32,771 log 8588 19048 Internal Server Error: /admin/rooms/room/
+Traceback (most recent call last):
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 2024, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 861, in get_changelist_instance
+    list_display_links = self.get_list_display_links(request, list_display)
+TypeError: RoomAdmin.get_list_display_links() takes 2 positional arguments but 3 were given
+ERROR 2025-04-25 11:02:32,973 basehttp 8588 19048 "GET /admin/rooms/room/ HTTP/1.1" 500 127255
+ERROR 2025-04-25 11:03:12,122 log 8588 18436 Internal Server Error: /admin/rooms/room/
+Traceback (most recent call last):
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 2024, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 861, in get_changelist_instance
+    list_display_links = self.get_list_display_links(request, list_display)
+TypeError: RoomAdmin.get_list_display_links() takes 2 positional arguments but 3 were given
+ERROR 2025-04-25 11:03:12,353 basehttp 8588 18436 "GET /admin/rooms/room/ HTTP/1.1" 500 127261
+ERROR 2025-04-25 14:56:22,625 log 8920 11992 Internal Server Error: /admin/rooms/reservation/
+Traceback (most recent call last):
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 2024, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 861, in get_changelist_instance
+    list_display_links = self.get_list_display_links(request, list_display)
+TypeError: ReservationAdmin.get_list_display_links() takes 2 positional arguments but 3 were given
+ERROR 2025-04-25 14:56:22,748 basehttp 8920 11992 "GET /admin/rooms/reservation/ HTTP/1.1" 500 127075
+ERROR 2025-04-25 14:56:59,499 log 8920 11992 Internal Server Error: /admin/rooms/reservation/
+Traceback (most recent call last):
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 2024, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 861, in get_changelist_instance
+    list_display_links = self.get_list_display_links(request, list_display)
+TypeError: ReservationAdmin.get_list_display_links() takes 2 positional arguments but 3 were given
+ERROR 2025-04-25 14:56:59,611 basehttp 8920 11992 "GET /admin/rooms/reservation/ HTTP/1.1" 500 127075
+ERROR 2025-04-25 14:57:08,279 log 8920 11992 Internal Server Error: /admin/rooms/reservation/
+Traceback (most recent call last):
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 2024, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 861, in get_changelist_instance
+    list_display_links = self.get_list_display_links(request, list_display)
+TypeError: ReservationAdmin.get_list_display_links() takes 2 positional arguments but 3 were given
+ERROR 2025-04-25 14:57:08,433 basehttp 8920 11992 "GET /admin/rooms/reservation/ HTTP/1.1" 500 127075
+ERROR 2025-04-25 14:57:16,163 log 8920 11992 Internal Server Error: /admin/rooms/reservation/
+Traceback (most recent call last):
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 2024, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 861, in get_changelist_instance
+    list_display_links = self.get_list_display_links(request, list_display)
+TypeError: ReservationAdmin.get_list_display_links() takes 2 positional arguments but 3 were given
+ERROR 2025-04-25 14:57:16,294 basehttp 8920 11992 "GET /admin/rooms/reservation/ HTTP/1.1" 500 127075
+ERROR 2025-04-27 21:25:47,809 views 16784 23432 Error in my_reservations view: Reverse for 'download_receipt' not found. 'download_receipt' is not a valid view function or pattern name.
+ERROR 2025-04-27 21:25:47,903 log 16784 23432 Internal Server Error: /rooms/my-reservations/
+ERROR 2025-04-27 21:25:47,904 basehttp 16784 23432 "GET /rooms/my-reservations/ HTTP/1.1" 500 0
+ERROR 2025-04-27 21:29:04,141 views 16784 23432 Error in my_reservations view: Reverse for 'download_receipt' not found. 'download_receipt' is not a valid view function or pattern name.
+ERROR 2025-04-27 21:29:04,207 log 16784 23432 Internal Server Error: /rooms/my-reservations/
+ERROR 2025-04-27 21:29:04,209 basehttp 16784 23432 "GET /rooms/my-reservations/ HTTP/1.1" 500 0
+ERROR 2025-04-27 21:40:35,923 log 18612 18540 Internal Server Error: /rooms/admin-dashboard/
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 266, in admin_dashboard
+    return render(request, 'rooms/admin_dashboard.html', context)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'password_change' not found. 'password_change' is not a valid view function or pattern name.
+ERROR 2025-04-27 21:40:35,987 basehttp 18612 18540 "GET /rooms/admin-dashboard/ HTTP/1.1" 500 198643
+ERROR 2025-04-27 22:15:54,337 views 16788 11488 Error in room_detail view: Reverse for 'create_reservation' with arguments '(85,)' not found. 1 pattern(s) tried: ['rooms/reserve/\\Z']
+ERROR 2025-04-27 22:15:54,341 log 16788 11488 Internal Server Error: /rooms/room/85/
+ERROR 2025-04-27 22:15:54,342 basehttp 16788 11488 "GET /rooms/room/85/ HTTP/1.1" 500 0
+ERROR 2025-04-27 22:18:10,723 views 16788 11488 Error in room_detail view: Reverse for 'create_reservation' with arguments '(85,)' not found. 1 pattern(s) tried: ['rooms/reserve/\\Z']
+ERROR 2025-04-27 22:18:10,724 log 16788 11488 Internal Server Error: /rooms/room/85/
+ERROR 2025-04-27 22:18:10,726 basehttp 16788 11488 "GET /rooms/room/85/ HTTP/1.1" 500 0
+ERROR 2025-04-27 22:27:19,479 views 3652 19312 Error in room_list view: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+ERROR 2025-04-27 22:27:19,506 log 3652 19312 Internal Server Error: /rooms/
+ERROR 2025-04-27 22:27:19,509 basehttp 3652 19312 "GET /rooms/ HTTP/1.1" 500 0
+ERROR 2025-04-27 22:27:35,000 views 3652 19312 Error in room_list view: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+ERROR 2025-04-27 22:27:35,001 log 3652 19312 Internal Server Error: /rooms/
+ERROR 2025-04-27 22:27:35,003 basehttp 3652 19312 "GET /rooms/ HTTP/1.1" 500 0
+ERROR 2025-04-27 22:27:58,147 views 3652 19312 Error in room_list view: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+ERROR 2025-04-27 22:27:58,149 log 3652 19312 Internal Server Error: /rooms/
+ERROR 2025-04-27 22:27:58,151 basehttp 3652 19312 "GET /rooms/ HTTP/1.1" 500 0
+ERROR 2025-04-27 22:30:45,036 views 18160 21012 Error in room_list view: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+ERROR 2025-04-27 22:30:45,219 log 18160 21012 Internal Server Error: /rooms/
+ERROR 2025-04-27 22:30:45,256 basehttp 18160 21012 "GET /rooms/ HTTP/1.1" 500 0
+ERROR 2025-04-27 22:31:36,334 views 18160 21012 Error in room_list view: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+ERROR 2025-04-27 22:31:36,336 log 18160 21012 Internal Server Error: /rooms/
+ERROR 2025-04-27 22:31:36,337 basehttp 18160 21012 "GET /rooms/ HTTP/1.1" 500 0
+ERROR 2025-04-27 22:31:41,093 views 18160 21012 Error in room_list view: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+ERROR 2025-04-27 22:31:41,096 log 18160 21012 Internal Server Error: /rooms/
+ERROR 2025-04-27 22:31:41,097 basehttp 18160 21012 "GET /rooms/ HTTP/1.1" 500 0
+ERROR 2025-04-27 22:36:47,866 views 15944 18972 Error in room_list view: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+ERROR 2025-04-27 22:36:47,867 log 15944 18972 Internal Server Error: /rooms/
+ERROR 2025-04-27 22:36:47,869 basehttp 15944 18972 "GET /rooms/ HTTP/1.1" 500 56
+ERROR 2025-04-27 22:44:41,709 log 9768 16248 Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'register' not found. 'register' is not a valid view function or pattern name.
+ERROR 2025-04-27 22:44:41,755 basehttp 9768 16248 "GET /login/ HTTP/1.1" 500 155768
+ERROR 2025-04-30 15:14:37,553 log 19964 19308 Internal Server Error: /rooms/reserve/
+Traceback (most recent call last):
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 152, in create_reservation
+    reservation.total_price = calculate_total_price(reservation.room.price_per_hour,
+                              ^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'calculate_total_price' is not defined
+ERROR 2025-04-30 15:14:37,564 basehttp 19964 19308 "POST /rooms/reserve/ HTTP/1.1" 500 75970
+ERROR 2025-04-30 15:16:36,963 log 12192 15592 Internal Server Error: /rooms/reserve/
+Traceback (most recent call last):
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 164, in create_reservation
+    return redirect('process_payment', reservation_id=reservation.id)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'process_payment' not found. 'process_payment' is not a valid view function or pattern name.
+ERROR 2025-04-30 15:16:36,971 basehttp 12192 15592 "POST /rooms/reserve/ HTTP/1.1" 500 95632
+ERROR 2025-04-30 16:45:06,729 log 12280 5140 Internal Server Error: /rooms/reservation/12/pdf/
+Traceback (most recent call last):
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 227, in download_pdf
+    template = get_template('rooms/receipt_pdf.html')
+               ^^^^^^^^^^^^
+NameError: name 'get_template' is not defined
+ERROR 2025-04-30 16:45:06,744 basehttp 12280 5140 "GET /rooms/reservation/12/pdf/ HTTP/1.1" 500 74646
+ERROR 2025-04-30 16:46:11,896 log 12280 5140 Internal Server Error: /rooms/reservation/13/pdf/
+Traceback (most recent call last):
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 227, in download_pdf
+    template = get_template('rooms/receipt_pdf.html')
+               ^^^^^^^^^^^^
+NameError: name 'get_template' is not defined
+ERROR 2025-04-30 16:46:11,908 basehttp 12280 5140 "GET /rooms/reservation/13/pdf/ HTTP/1.1" 500 74648
+ERROR 2025-05-08 22:28:31,554 log 3704 7760 Internal Server Error: /rooms/admin-dashboard/
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 248, in admin_dashboard
+    return render(request, 'rooms/admin_dashboard.html', context)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'manage_rooms' not found. 'manage_rooms' is not a valid view function or pattern name.
+ERROR 2025-05-08 22:28:31,569 basehttp 3704 7760 "GET /rooms/admin-dashboard/ HTTP/1.1" 500 176537
+ERROR 2025-05-08 22:44:11,308 log 19048 19368 Internal Server Error: /rooms/reserve/
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 165, in create_reservation
+    reservation.total_price = reservation.room.price_per_hour * duration
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+TypeError: unsupported operand type(s) for *: 'decimal.Decimal' and 'float'
+ERROR 2025-05-08 22:44:11,320 basehttp 19048 19368 "POST /rooms/reserve/ HTTP/1.1" 500 77139
+ERROR 2025-05-08 22:46:27,624 log 8948 12516 Internal Server Error: /rooms/reservation/14/payment/
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 578, in process_payment
+    return render(request, 'rooms/payment.html', context)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rooms/payment.html
+ERROR 2025-05-08 22:46:27,630 basehttp 8948 12516 "GET /rooms/reservation/14/payment/ HTTP/1.1" 500 92705
+ERROR 2025-05-08 22:49:01,296 log 8948 16300 Internal Server Error: /rooms/admin-dashboard/
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 249, in admin_dashboard
+    return render(request, 'rooms/admin_dashboard.html', context)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\defaulttags.py", line 198, in render
+    values = list(values)
+TypeError: 'int' object is not iterable
+ERROR 2025-05-08 22:49:01,332 basehttp 8948 16300 "GET /rooms/admin-dashboard/ HTTP/1.1" 500 178923
+ERROR 2025-05-08 22:50:28,743 log 8948 1500 Internal Server Error: /rooms/admin-dashboard/
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 249, in admin_dashboard
+    return render(request, 'rooms/admin_dashboard.html', context)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\template\defaulttags.py", line 198, in render
+    values = list(values)
+TypeError: 'int' object is not iterable
+ERROR 2025-05-08 22:50:28,753 basehttp 8948 1500 "GET /rooms/admin-dashboard/ HTTP/1.1" 500 178415
+ERROR 2025-05-08 22:59:29,818 log 17488 4420 Internal Server Error: /rooms/reservation/15/payment/
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: rooms_payment.transaction_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 575, in process_payment
+    payment.save()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\models\query.py", line 1854, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\models\sql\compiler.py", line 1881, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: UNIQUE constraint failed: rooms_payment.transaction_id
+ERROR 2025-05-08 22:59:29,852 basehttp 17488 4420 "POST /rooms/reservation/15/payment/ HTTP/1.1" 500 161243
+ERROR 2025-05-08 23:01:40,945 log 12028 15872 Internal Server Error: /rooms/reservation/15/payment/
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 576, in process_payment
+    payment.transaction_id = str(uuid.uuid4())
+                                 ^^^^
+NameError: name 'uuid' is not defined. Did you forget to import 'uuid'?
+ERROR 2025-05-08 23:01:40,953 basehttp 12028 15872 "POST /rooms/reservation/15/payment/ HTTP/1.1" 500 77010
+ERROR 2025-05-08 23:02:06,156 log 12028 15872 Internal Server Error: /rooms/reservation/15/payment/
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\.ven\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\pc\Desktop\system-de-reservation\DjangoProject1\rooms\views.py", line 576, in process_payment
+    payment.transaction_id = str(uuid.uuid4())
+                                 ^^^^
+NameError: name 'uuid' is not defined. Did you forget to import 'uuid'?
+ERROR 2025-05-08 23:02:06,160 basehttp 12028 15872 "POST /rooms/reservation/15/payment/ HTTP/1.1" 500 77010

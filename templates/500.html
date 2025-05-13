@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="error-container">
+    <h1>Erreur Serveur (500)</h1>
+    <p>Nous sommes désolés, une erreur inattendue s'est produite.</p>
+    <p>Notre équipe technique a été notifiée et travaille à résoudre le problème.</p>
+    <div class="error-actions">
+        <a href="{% url 'rooms:room_list' %}" class="btn btn-primary">Retour à l'accueil</a>
+    </div>
+</div>
+
+<style>
+    .error-container {
+        text-align: center;
+        padding: 40px 20px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .error-actions {
+        margin-top: 30px;
+    }
+    .error-container h1 {
+        color: #dc3545;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Connexion - Système de Réservation{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-sign-in-alt fa-3x text-primary mb-3"></i>
+                        <h3 class="mb-3">Connexion</h3>
+                        <p class="text-muted">Connectez-vous pour réserver des salles</p>
+                    </div>
+
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        Nom d'utilisateur ou mot de passe incorrect.
+                    </div>
+                    {% endif %}
+
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Nom d'utilisateur</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <input type="text" name="username" id="id_username" 
+                                       class="form-control {% if form.username.errors %}is-invalid{% endif %}" required autofocus>
+                                {% if form.username.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.username.errors|join:", " }}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="id_password" class="form-label">Mot de passe</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input type="password" name="password" id="id_password" 
+                                       class="form-control {% if form.password.errors %}is-invalid{% endif %}" required>
+                                {% if form.password.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.password.errors|join:", " }}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                            </button>
+                            <a href="{% url 'register' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-user-plus me-2"></i>Créer un compte
+                            </a>
+                        </div>
+                    </form>
+
+                    <div class="mt-4 text-center">
+                        <a href="{% url 'password_reset' %}" class="text-muted text-decoration-none">
+                            <i class="fas fa-key me-1"></i>Mot de passe oublié ?
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

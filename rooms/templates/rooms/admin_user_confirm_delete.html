@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin-users.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">
+            <i class="fas fa-trash-alt me-2"></i>Supprimer l'utilisateur
+        </h1>
+        <div class="dashboard-actions">
+            <a href="{% url 'rooms:manage_users' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i>Retour à la liste
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="alert alert-danger">
+                <h4 class="alert-heading mb-3">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</h4>
+                <p><strong>Username :</strong> {{ user.username }}</p>
+                <p><strong>Nom :</strong> {{ user.last_name }}</p>
+                <p><strong>Prénom :</strong> {{ user.first_name }}</p>
+                <p><strong>Email :</strong> {{ user.email }}</p>
+                
+                <div class="mt-4">
+                    <form method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash me-1"></i>Oui, supprimer
+                        </button>
+                    </form>
+                    <a href="{% url 'rooms:manage_users' %}" class="btn btn-secondary">
+                        <i class="fas fa-times me-1"></i>Non, annuler
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

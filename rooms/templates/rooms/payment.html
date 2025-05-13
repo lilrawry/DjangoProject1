@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0"><i class="fas fa-credit-card me-2"></i>Paiement de la Réservation</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Reservation Summary -->
+                    <div class="alert alert-info">
+                        <h4>Résumé de la réservation</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Salle:</strong> {{ reservation.room.name }}</p>
+                                <p><strong>Date de début:</strong> {{ reservation.start_time|date:"d/m/Y H:i" }}</p>
+                                <p><strong>Date de fin:</strong> {{ reservation.end_time|date:"d/m/Y H:i" }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>ID de réservation:</strong> #{{ reservation.id }}</p>
+                                <p><strong>Statut:</strong> {{ reservation.status }}</p>
+                                <p><strong>Prix total:</strong> <span class="text-primary fw-bold">{{ reservation.total_price }} €</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Form -->
+                    <form method="post" class="mt-4">
+                        {% csrf_token %}
+                        
+                        <h4 class="mb-4">Informations de paiement</h4>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="card-name" class="form-label">Nom sur la carte</label>
+                                    <input type="text" class="form-control" id="card-name" placeholder="Nom complet">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="card-number" class="form-label">Numéro de carte</label>
+                                    <input type="text" class="form-control" id="card-number" placeholder="XXXX XXXX XXXX XXXX">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="expiry-month" class="form-label">Mois d'expiration</label>
+                                    <select class="form-select" id="expiry-month">
+                                        <option value="">MM</option>
+                                        {% for i in "123456789012"|make_list %}
+                                        <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="expiry-year" class="form-label">Année d'expiration</label>
+                                    <select class="form-select" id="expiry-year">
+                                        <option value="">YYYY</option>
+                                        {% for year in "12345"|make_list %}
+                                        <option value="{{ forloop.counter|add:2024 }}">{{ forloop.counter|add:2024 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="cvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="cvv" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method Selection -->
+                        <!-- Only one 'Méthode de paiement' section retained -->
+                        <div class="mb-4">
+                            <label class="form-label d-block">Méthode de paiement</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="credit" checked>
+                                <label class="form-check-label" for="credit">
+                                    <i class="fab fa-cc-visa me-1"></i> Carte de crédit
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="paypal">
+                                <label class="form-check-label" for="paypal">
+                                    <i class="fab fa-paypal me-1"></i> PayPal
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="bank">
+                                <label class="form-check-label" for="bank">
+                                    <i class="fas fa-university me-1"></i> Virement bancaire
+                                </label>
+                            </div>
+                        </div>
+
+                
+
+                        <!-- Terms and Conditions -->
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="terms">
+                            <label class="form-check-label" for="terms">
+                                J'accepte les <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">conditions générales</a> et la <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">politique de confidentialité</a>
+                            </label>
+                        </div>
+
+                        <!-- Total and Submit Button -->
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <div>
+                                <h5 class="mb-0">Total à payer:</h5>
+                                <h3 class="text-primary">{{ reservation.total_price }} €</h3>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-lock me-2"></i>Payer maintenant
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="text-center">
+                        <small class="text-muted">Paiement sécurisé <i class="fas fa-lock"></i> | Vos données sont protégées</small>
+                        <div class="mt-2">
+                            <i class="fab fa-cc-visa fa-2x mx-1"></i>
+                            <i class="fab fa-cc-mastercard fa-2x mx-1"></i>
+                            <i class="fab fa-cc-amex fa-2x mx-1"></i>
+                            <i class="fab fa-paypal fa-2x mx-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back to Reservations Button -->
+            <div class="text-center mt-4">
+                <a href="{% url 'rooms:my_reservations' %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Retour à mes réservations
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Terms and Conditions Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termsModalLabel">Conditions générales</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Conditions de paiement et d'annulation</h6>
+                <p>Le paiement est requis pour confirmer votre réservation. Les annulations effectuées plus de 24 heures avant le début de la réservation sont éligibles à un remboursement complet. Les annulations effectuées moins de 24 heures avant ne sont pas remboursables.</p>
+                
+                <h6>Utilisation des salles</h6>
+                <p>Les salles doivent être utilisées conformément à leur destination. Tout dommage causé sera facturé au client. Il est interdit de fumer dans les salles.</p>
+                
+                <h6>Responsabilité</h6>
+                <p>Le client est responsable de tout dommage matériel et corporel causé par lui-même ou par les participants à sa réservation.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="privacyModalLabel">Politique de confidentialité</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Collecte des données</h6>
+                <p>Nous collectons uniquement les données nécessaires au traitement de votre réservation et du paiement. Ces données incluent votre nom, email, et les détails de votre carte de paiement.</p>
+                
+                <h6>Utilisation des données</h6>
+                <p>Vos données sont utilisées uniquement pour traiter votre réservation et votre paiement. Nous ne partageons pas vos informations avec des tiers.</p>
+                
+                <h6>Sécurité</h6>
+                <p>Vos données de paiement sont cryptées et sécurisées. Nous ne stockons pas les détails complets de votre carte de crédit sur nos serveurs.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Simple form validation
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const cardName = document.getElementById('card-name').value;
+        const cardNumber = document.getElementById('card-number').value;
+        const expiryMonth = document.getElementById('expiry-month').value;
+        const expiryYear = document.getElementById('expiry-year').value;
+        const cvv = document.getElementById('cvv').value;
+        const terms = document.getElementById('terms').checked;
+        
+        if (!cardName || !cardNumber || !expiryMonth || !expiryYear || !cvv) {
+            e.preventDefault();
+            alert('Veuillez remplir tous les champs de paiement');
+            return false;
+        }
+        
+        if (!terms) {
+            e.preventDefault();
+            alert('Veuillez accepter les conditions générales');
+            return false;
+        }
+    });
+    
+    // Format card number with spaces
+    document.getElementById('card-number').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+        const matches = value.match(/\d{4,16}/g);
+        const match = matches && matches[0] || '';
+        const parts = [];
+        
+        for (let i = 0; i < match.length; i += 4) {
+            parts.push(match.substring(i, i + 4));
+        }
+        
+        if (parts.length) {
+            e.target.value = parts.join(' ');
+        } else {
+            e.target.value = value;
+        }
+    });
+    
+    // Limit CVV to 3-4 digits
+    document.getElementById('cvv').addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
+    });
+</script>
+{% endblock %}

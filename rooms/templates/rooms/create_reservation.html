@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Nouvelle Réservation</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label for="room" class="form-label">Salle</label>
+                        <select class="form-select" id="room" name="room" required>
+                            <option value="">Sélectionnez une salle</option>
+                            {% for room in rooms %}
+                            <option value="{{ room.id }}" {% if selected_room == room.id %}selected{% endif %}>
+                                {{ room.name }} - {{ room.capacity }} personnes ({{ room.price_per_hour }}€/h)
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <div class="invalid-feedback">
+                            Veuillez sélectionner une salle.
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="start_time" class="form-label">Date et heure de début</label>
+                            <input type="datetime-local" class="form-control" id="start_time" name="start_time" required>
+                            <div class="invalid-feedback">
+                                Veuillez sélectionner une date et heure de début.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="end_time" class="form-label">Date et heure de fin</label>
+                            <input type="datetime-local" class="form-control" id="end_time" name="end_time" required>
+                            <div class="invalid-feedback">
+                                Veuillez sélectionner une date et heure de fin.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Récapitulatif</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Durée:</strong></p>
+                                    <p class="text-muted" id="duration">0 heures</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Prix total:</strong></p>
+                                    <p class="h4 text-primary mb-0" id="totalPrice">0.00 €</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-calendar-check me-2"></i>Confirmer la réservation
+                        </button>
+                        <a href="{% url 'rooms:room_list' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-2"></i>Annuler
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const roomSelect = document.getElementById('room');
+    const startTimeInput = document.getElementById('start_time');
+    const endTimeInput = document.getElementById('end_time');
+    const durationElement = document.getElementById('duration');
+    const totalPriceElement = document.getElementById('totalPrice');
+    
+    const rooms = {
+        {% for room in rooms %}
+        {{ room.id }}: {
+            price: {{ room.price_per_hour }},
+            name: "{{ room.name }}"
+        },
+        {% endfor %}
+    };
+
+    function updateSummary() {
+        if (startTimeInput.value && endTimeInput.value && roomSelect.value) {
+            const start = new Date(startTimeInput.value);
+            const end = new Date(endTimeInput.value);
+            const diffHours = (end - start) / (1000 * 60 * 60);
+            
+            if (diffHours > 0) {
+                const room = rooms[roomSelect.value];
+                const price = diffHours * room.price;
+                
+                durationElement.textContent = diffHours.toFixed(1) + ' heures';
+                totalPriceElement.textContent = price.toFixed(2) + ' €';
+            } else {
+                durationElement.textContent = '0 heures';
+                totalPriceElement.textContent = '0.00 €';
+            }
+        }
+    }
+
+    roomSelect.addEventListener('change', updateSummary);
+    startTimeInput.addEventListener('change', updateSummary);
+    endTimeInput.addEventListener('change', updateSummary);
+
+    // Form validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+    });
+});
+</script>
+{% endblock %} 

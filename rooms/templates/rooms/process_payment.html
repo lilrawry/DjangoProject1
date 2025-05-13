@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Paiement de la réservation</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4 p-3 bg-light rounded">
+                        <h5 class="border-bottom pb-2">Récapitulatif de la réservation</h5>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <p><strong>Salle:</strong> {{ reservation.room.name }}</p>
+                                <p><strong>Date:</strong> {{ reservation.start_time|date:"d/m/Y" }}</p>
+                                <p><strong>Heure:</strong> {{ reservation.start_time|time:"H:i" }} - {{ reservation.end_time|time:"H:i" }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Durée:</strong> 
+                                    {% with duration=reservation.end_time|timeuntil:reservation.start_time %}
+                                        {{ duration }}
+                                    {% endwith %}
+                                </p>
+                                <p><strong>Prix total:</strong> <span class="badge bg-success">{{ reservation.total_price }} €</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="post" class="mt-4" id="payment-form">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="id_payment_method" class="form-label fw-bold">Choisissez votre méthode de paiement:</label>
+                            <div class="payment-methods-container mt-2">
+                                <div class="row">
+                                    <div class="col-md-3 mb-3">
+                                        <input type="radio" class="btn-check" name="payment_method" id="credit_card" value="credit_card" checked>
+                                        <label class="btn btn-outline-primary w-100 d-flex flex-column align-items-center" for="credit_card">
+                                            <i class="fas fa-credit-card fa-2x mb-2"></i>
+                                            <span>Carte bancaire</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <input type="radio" class="btn-check" name="payment_method" id="paypal" value="paypal">
+                                        <label class="btn btn-outline-primary w-100 d-flex flex-column align-items-center" for="paypal">
+                                            <i class="fab fa-paypal fa-2x mb-2"></i>
+                                            <span>PayPal</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <input type="radio" class="btn-check" name="payment_method" id="bank_transfer" value="bank_transfer">
+                                        <label class="btn btn-outline-primary w-100 d-flex flex-column align-items-center" for="bank_transfer">
+                                            <i class="fas fa-university fa-2x mb-2"></i>
+                                            <span>Virement</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <input type="radio" class="btn-check" name="payment_method" id="cash" value="cash">
+                                        <label class="btn btn-outline-primary w-100 d-flex flex-column align-items-center" for="cash">
+                                            <i class="fas fa-money-bill-wave fa-2x mb-2"></i>
+                                            <span>Espèces</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="credit-card-form" class="mt-4 payment-section">
+                            <h5 class="mb-3 border-bottom pb-2">Informations de carte bancaire</h5>
+                            
+                            <div class="card-icons mb-3 d-flex gap-2">
+                                <i class="fab fa-cc-visa fa-2x text-primary"></i>
+                                <i class="fab fa-cc-mastercard fa-2x text-danger"></i>
+                                <i class="fab fa-cc-amex fa-2x text-info"></i>
+                                <i class="fab fa-cc-discover fa-2x text-warning"></i>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="card_number" class="form-label">Numéro de carte</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="card_number" placeholder="XXXX XXXX XXXX XXXX">
+                                        <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
+                                    </div>
+                                    <div class="form-text">Entrez le numéro à 16 chiffres de votre carte</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="card_name" class="form-label">Nom sur la carte</label>
+                                    <input type="text" class="form-control" id="card_name">
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="card_expiry" class="form-label">Date d'expiration</label>
+                                    <input type="text" class="form-control" id="card_expiry" placeholder="MM/AA">
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="card_cvc" class="form-label">CVC</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="card_cvc" placeholder="XXX">
+                                        <span class="input-group-text" title="Le code de sécurité à 3 chiffres au dos de votre carte"><i class="fas fa-question-circle"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="paypal-form" class="mt-4 payment-section d-none">
+                            <div class="text-center p-4">
+                                <i class="fab fa-paypal fa-4x text-primary mb-3"></i>
+                                <p>Vous serez redirigé vers PayPal pour compléter votre paiement en toute sécurité.</p>
+                            </div>
+                        </div>
+                        
+                        <div id="bank-transfer-form" class="mt-4 payment-section d-none">
+                            <h5 class="mb-3 border-bottom pb-2">Informations bancaires</h5>
+                            <div class="alert alert-info">
+                                <p class="mb-1"><strong>Titulaire:</strong> ACME Réservations</p>
+                                <p class="mb-1"><strong>IBAN:</strong> FR76 3000 6000 0112 3456 7890 123</p>
+                                <p class="mb-1"><strong>BIC:</strong> AGRIFRPP123</p>
+                                <p class="mb-1"><strong>Référence:</strong> RES-{{ reservation.id }}</p>
+                                <p class="mb-0"><small>Veuillez inclure la référence dans votre virement pour que nous puissions identifier votre paiement.</small></p>
+                            </div>
+                        </div>
+                        
+                        <div id="cash-form" class="mt-4 payment-section d-none">
+                            <div class="alert alert-warning">
+                                <h5 class="alert-heading">Paiement en espèces</h5>
+                                <p>Veuillez vous présenter à notre bureau au moins 30 minutes avant le début de votre réservation pour effectuer le paiement en espèces.</p>
+                                <p class="mb-0">Adresse: 123 Rue des Réservations, 75000 Paris</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 mb-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms-checkbox" required>
+                                <label class="form-check-label" for="terms-checkbox">
+                                    J'accepte les <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">conditions générales</a> et la <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">politique de confidentialité</a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-lock me-2"></i>Payer maintenant {{ reservation.total_price }} €
+                            </button>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-shield-alt me-1"></i>
+                                Paiement sécurisé - Vos données sont chiffrées et sécurisées
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Terms Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termsModalLabel">Conditions générales</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>1. Réservations</h6>
+                <p>Les réservations sont sujettes à disponibilité et ne sont confirmées qu'après paiement complet.</p>
+                
+                <h6>2. Annulations</h6>
+                <p>Les annulations doivent être effectuées au moins 24 heures avant l'heure de début de la réservation pour être éligibles à un remboursement.</p>
+                
+                <h6>3. Remboursements</h6>
+                <p>Les remboursements pour les annulations éligibles seront traités dans un délai de 5 à 10 jours ouvrables.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Privacy Modal -->
+<div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="privacyModalLabel">Politique de confidentialité</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Nous collectons uniquement les informations nécessaires pour traiter votre réservation et votre paiement. Vos informations de paiement sont sécurisées et cryptées.</p>
+                <p>Nous ne partageons pas vos données personnelles avec des tiers sans votre consentement.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const paymentMethodInputs = document.querySelectorAll('input[name="payment_method"]');
+        const paymentSections = document.querySelectorAll('.payment-section');
+        const creditCardForm = document.getElementById('credit-card-form');
+        const paypalForm = document.getElementById('paypal-form');
+        const bankTransferForm = document.getElementById('bank-transfer-form');
+        const cashForm = document.getElementById('cash-form');
+        
+        function showSelectedPaymentForm() {
+            // Hide all payment sections first
+            paymentSections.forEach(section => {
+                section.classList.add('d-none');
+            });
+            
+            // Show selected payment section
+            const selectedMethod = document.querySelector('input[name="payment_method"]:checked').value;
+            
+            if (selectedMethod === 'credit_card') {
+                creditCardForm.classList.remove('d-none');
+            } else if (selectedMethod === 'paypal') {
+                paypalForm.classList.remove('d-none');
+            } else if (selectedMethod === 'bank_transfer') {
+                bankTransferForm.classList.remove('d-none');
+            } else if (selectedMethod === 'cash') {
+                cashForm.classList.remove('d-none');
+            }
+        }
+        
+        // Initial setup
+        showSelectedPaymentForm();
+        
+        // Change handler
+        paymentMethodInputs.forEach(input => {
+            input.addEventListener('change', showSelectedPaymentForm);
+        });
+        
+        // Credit card input formatting
+        const cardNumberInput = document.getElementById('card_number');
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener('input', function(e) {
+                // Remove non-digits
+                let value = this.value.replace(/\D/g, '');
+                // Add space every 4 digits
+                value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+                // Limit to 19 characters (16 digits + 3 spaces)
+                this.value = value.substring(0, 19);
+            });
+        }
+        
+        const cardExpiryInput = document.getElementById('card_expiry');
+        if (cardExpiryInput) {
+            cardExpiryInput.addEventListener('input', function(e) {
+                // Remove non-digits
+                let value = this.value.replace(/\D/g, '');
+                // Format as MM/YY
+                if (value.length > 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                // Limit to 5 characters (MM/YY)
+                this.value = value.substring(0, 5);
+            });
+        }
+        
+        const cardCvcInput = document.getElementById('card_cvc');
+        if (cardCvcInput) {
+            cardCvcInput.addEventListener('input', function(e) {
+                // Remove non-digits and limit to 3 or 4 digits
+                this.value = this.value.replace(/\D/g, '').substring(0, 4);
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin-rooms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">
+            <i class="fas fa-door-open me-2"></i>{{ title }}
+        </h1>
+        <div class="dashboard-actions">
+            <a href="{% url 'rooms:manage_rooms' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i>Retour à la liste
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">Nom de la salle</label>
+                            {{ form.name }}
+                            <div class="invalid-feedback">{{ form.name.errors.as_text }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="{{ form.capacity.id_for_label }}" class="form-label">Capacité (personnes)</label>
+                            {{ form.capacity }}
+                            <div class="invalid-feedback">{{ form.capacity.errors.as_text }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="{{ form.price_per_hour.id_for_label }}" class="form-label">Prix par heure (€)</label>
+                            {{ form.price_per_hour }}
+                            <div class="invalid-feedback">{{ form.price_per_hour.errors.as_text }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                    {{ form.description }}
+                    <div class="invalid-feedback">{{ form.description.errors.as_text }}</div>
+                </div>
+
+                <div class="mb-3 form-check">
+                    {{ form.is_available }}
+                    <label class="form-check-label" for="{{ form.is_available.id_for_label }}">
+                        Disponible
+                    </label>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{% url 'rooms:manage_rooms' %}" class="btn btn-secondary">
+                        <i class="fas fa-times me-1"></i>Annuler
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-1"></i>Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Form validation
+document.addEventListener('DOMContentLoaded', function() {
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+});
+</script>
+{% endblock %}

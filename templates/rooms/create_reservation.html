@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Créer une réservation</h2>
+                </div>
+                <div class="card-body">
+                    {% if selected_room %}
+                    <div class="alert alert-info">
+                        <h4>Salle sélectionnée: {{ selected_room.name }}</h4>
+                        <p>Prix par heure: {{ selected_room.price_per_hour }}€</p>
+                        <p>Capacité: {{ selected_room.capacity }} personnes</p>
+                    </div>
+                    {% endif %}
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        {% for field in form %}
+                        <div class="form-group mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="alert alert-danger mt-1">
+                                {% for error in field.errors %}
+                                <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Confirmer la réservation</button>
+                            <a href="{% url 'rooms:room_list' %}" class="btn btn-secondary">Retour à la liste des salles</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add Bootstrap classes to form fields
+    var formFields = document.querySelectorAll('input, select');
+    formFields.forEach(function(field) {
+        field.classList.add('form-control');
+    });
+});
+</script>
+{% endblock %}

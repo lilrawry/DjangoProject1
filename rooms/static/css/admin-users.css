@@ -1,0 +1,81 @@
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.dashboard-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    font-weight: 600;
+    color: #495057;
+    background-color: #f8f9fa;
+    border-top: 2px solid #dee2e6;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.btn-group {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.form-control {
+    padding: 0.75rem;
+}
+
+.form-check {
+    margin-bottom: 1.5rem;
+}
+
+.alert {
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.alert-danger {
+    background-color: #fff3f3;
+    color: #842029;
+}
+
+.alert-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.invalid-feedback {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
+}

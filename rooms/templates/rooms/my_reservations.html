@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Mes Réservations{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <h2 class="mb-4">Mes réservations</h2>
+            {% if reservations %}
+                <div class="row">
+                    {% for reservation in reservations %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 {% if reservation.status == 'cancelled' %}border-danger{% elif reservation.status == 'confirmed' %}border-success{% else %}border-warning{% endif %}">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">{{ reservation.room.name }}</h5>
+                                <span class="badge {% if reservation.status == 'confirmed' %}bg-success{% elif reservation.status == 'cancelled' %}bg-danger{% else %}bg-warning{% endif %}">
+                                    <i class="fas {% if reservation.status == 'confirmed' %}fa-check-circle{% elif reservation.status == 'cancelled' %}fa-ban{% else %}fa-clock{% endif %} me-1"></i>
+                                    {{ reservation.get_status_display }}
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <div>
+                                        <span class="badge bg-info text-dark">
+                                            <i class="fas fa-calendar me-1"></i> {{ reservation.start_time|date:"d/m/Y" }}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        {% if reservation.is_paid %}
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check-circle me-1"></i> Payé
+                                            </span>
+                                        {% elif reservation.payment_info %}
+                                            {% if reservation.payment_info.status == 'pending' %}
+                                                <span class="badge bg-warning text-dark">
+                                                    <i class="fas fa-hourglass-half me-1"></i> Paiement en attente
+                                                </span>
+                                            {% elif reservation.payment_info.status == 'failed' %}
+                                                <span class="badge bg-danger">
+                                                    <i class="fas fa-times-circle me-1"></i> Paiement échoué
+                                                </span>
+                                            {% else %}
+                                                <span class="badge bg-secondary">
+                                                    <i class="fas fa-money-bill me-1"></i> Non payé
+                                                </span>
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="badge bg-secondary">
+                                                <i class="fas fa-money-bill me-1"></i> Non payé
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="fas fa-clock me-2"></i> {{ reservation.start_time|time:"H:i" }} - {{ reservation.end_time|time:"H:i" }}</li>
+                                    <li class="mb-2"><i class="fas fa-money-bill-wave me-2"></i> {{ reservation.total_price }} DH</li>
+                                    <li><i class="fas fa-calendar-plus me-2"></i> Réservée le {{ reservation.created_at|date:"d/m/Y" }}</li>
+                                    {% if reservation.payment_info and reservation.payment_info.status == 'pending' %}
+                                    <li class="mt-2">
+                                        <div class="alert alert-info py-2 mb-0">
+                                            <i class="fas fa-info-circle me-1"></i> Paiement en cours de traitement. Vous n'avez pas besoin de payer à nouveau.
+                                        </div>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                                
+                                <div class="d-flex justify-content-end mt-3">
+                                    {% if reservation.status == 'pending' and not reservation.is_paid and not reservation.payment_info %}
+                                        <a href="{% url 'rooms:process_payment' reservation.id %}" class="btn btn-success me-2">
+                                            <i class="fas fa-credit-card me-1"></i> Payer
+                                        </a>
+                                    {% endif %}
+                                    
+                                    {% if reservation.status != 'cancelled' %}
+                                        <a href="{% url 'rooms:cancel_reservation' reservation.id %}" class="btn btn-danger me-2" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette réservation?');">
+                                            <i class="fas fa-times me-1"></i> Annuler
+                                        </a>
+                                    {% endif %}
+                                    
+                                    {% if reservation.is_paid or reservation.payment_info.status == 'completed' %}
+                                        <a href="{% url 'rooms:download_pdf' reservation_id=reservation.id %}" class="btn btn-primary">
+                                            <i class="fas fa-file-pdf me-1"></i> Reçu
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <p>Aucune réservation pour le moment.</p>
+                    <a href="{% url 'rooms:room_list' %}" class="btn btn-primary mt-2">Réserver une salle</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if is_paginated %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.start_date %}&start_date={{ request.GET.start_date }}{% endif %}">
+                        <i class="fas fa-angle-double-left"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.start_date %}&start_date={{ request.GET.start_date }}{% endif %}">
+                        <i class="fas fa-angle-left"></i>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.start_date %}&start_date={{ request.GET.start_date }}{% endif %}">
+                            {{ num }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.start_date %}&start_date={{ request.GET.start_date }}{% endif %}">
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.start_date %}&start_date={{ request.GET.start_date }}{% endif %}">
+                        <i class="fas fa-angle-double-right"></i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inscription - Système de Réservation{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                        <h3 class="mb-3">Créer un compte</h3>
+                        <p class="text-muted">Inscrivez-vous pour réserver des salles</p>
+                    </div>
+
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        Veuillez corriger les erreurs ci-dessous.
+                    </div>
+                    {% endif %}
+
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Nom d'utilisateur</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <input type="text" name="username" id="id_username" 
+                                       class="form-control {% if form.username.errors %}is-invalid{% endif %}" required>
+                                {% if form.username.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.username.errors|join:", " }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <small class="form-text text-muted">
+                                Requis. 150 caractères maximum. Lettres, chiffres et @/./+/-/_ uniquement.
+                            </small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_password1" class="form-label">Mot de passe</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input type="password" name="password1" id="id_password1" 
+                                       class="form-control {% if form.password1.errors %}is-invalid{% endif %}" required>
+                                {% if form.password1.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.password1.errors|join:", " }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <small class="form-text text-muted">
+                                Votre mot de passe ne peut pas être trop similaire à vos autres informations personnelles.
+                                Votre mot de passe doit contenir au moins 8 caractères.
+                                Votre mot de passe ne peut pas être un mot de passe couramment utilisé.
+                                Votre mot de passe ne peut pas être entièrement numérique.
+                            </small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="id_password2" class="form-label">Confirmation du mot de passe</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input type="password" name="password2" id="id_password2" 
+                                       class="form-control {% if form.password2.errors %}is-invalid{% endif %}" required>
+                                {% if form.password2.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.password2.errors|join:", " }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <small class="form-text text-muted">
+                                Entrez le même mot de passe que précédemment, pour vérification.
+                            </small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-user-plus me-2"></i>S'inscrire
+                            </button>
+                            <a href="{% url 'login' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Retour à la connexion
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
