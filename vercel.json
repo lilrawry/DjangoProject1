@@ -1,5 +1,10 @@
 {
   "version": 2,
+  "functions": {
+    "vercel_wsgi.py": {
+      "runtime": "python3.10"
+    }
+  },
   "builds": [
     {
       "src": "vercel_wsgi.py",
@@ -7,6 +12,10 @@
     }
   ],
   "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "vercel_wsgi.py"
