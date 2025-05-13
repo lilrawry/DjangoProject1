@@ -182,25 +182,20 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
-            'formatter': 'verbose',
-        },
         'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+            'formatter': 'verbose',
+            'level': 'ERROR',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file', 'console'],
+            'handlers': ['console'],
             'level': 'ERROR',
             'propagate': True,
         },
         'rooms': {
-            'handlers': ['file', 'console'],
+            'handlers': ['console'],
             'level': 'ERROR',
             'propagate': True,
         },
