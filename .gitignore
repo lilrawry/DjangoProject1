@@ -33,3 +33,16 @@ build/
 .vscode/
 *.swp
 *.swo
+
+# Utility scripts (not needed in production)
+add_rooms.py
+add_sample_rooms.py
+clean_media.ps1
+clean_media.py
+reset_media.py
+
+# Local development tutorials
+djangoproject/
+
+# Vercel deployment
+.vercel
