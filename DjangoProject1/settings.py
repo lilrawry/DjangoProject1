@@ -174,11 +174,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
+            'format': '{levelname} {asctime} {module} {message}',
             'style': '{',
         },
     },
@@ -186,26 +182,25 @@ LOGGING = {
         'console': {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose',
-            'level': 'ERROR',
         },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
     },
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': 'ERROR',
-            'propagate': True,
+            'level': 'INFO',
+            'propagate': False,
         },
         'rooms': {
             'handlers': ['console'],
-            'level': 'ERROR',
-            'propagate': True,
+            'level': 'INFO',
+            'propagate': False,
         },
     },
 }
-
-# Create logs directory if it doesn't exist
-LOGS_DIR = os.path.join(BASE_DIR, 'logs')
-os.makedirs(LOGS_DIR, exist_ok=True)
 
 # Error handling
 handler500 = 'rooms.views.handler500'
