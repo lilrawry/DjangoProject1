@@ -582,7 +582,10 @@ def process_payment(request, reservation_id):
             reservation.status = 'pending'
             reservation.save()
             
-            messages.success(request, "Votre paiement a été enregistré et est en attente d'approbation par un administrateur. Vous recevrez une confirmation une fois qu'il sera approuvé.")
+            # Use a specific message format that will be detected by our JavaScript
+            payment_message = "Votre paiement a été enregistré et est en attente d'approbation par un administrateur. Vous recevrez une confirmation une fois qu'il sera approuvé."
+            # Add 'payment-message' as an extra tag to help identify this message in the template
+            messages.success(request, payment_message, extra_tags='payment-message')
             return redirect('rooms:my_reservations')
     else:
         form = PaymentForm()

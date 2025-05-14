@@ -69,8 +69,17 @@
     {% if messages %}
         <div class="container mt-3">
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show{% if 'payment' in message.message|lower %} payment-message{% endif %}" role="alert">
+                    {% if 'payment' in message.message|lower %}
+                        <div class="d-flex align-items-center">
+                            <div class="spinner-border spinner-border-sm me-2" role="status">
+                                <span class="visually-hidden">Chargement...</span>
+                            </div>
+                            <div>{{ message }}</div>
+                        </div>
+                    {% else %}
+                        {{ message }}
+                    {% endif %}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endfor %}
@@ -111,14 +120,66 @@
             });
         });
 
-        // Auto-hide alerts after 5 seconds
-        setTimeout(function() {
-            document.querySelectorAll('.alert').forEach(alert => {
-                const bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
+        // Handle different types of alerts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all alerts
+            const allAlerts = document.querySelectorAll('.alert');
+            
+            // Separate payment messages and regular messages
+            const paymentMessages = [];
+            const regularMessages = [];
+            
+            allAlerts.forEach(alert => {
+                // Check if this alert contains a payment message
+                if (alert.querySelector('.spinner-border') || alert.classList.contains('payment-message')) {
+                    paymentMessages.push(alert);
+                } else {
+                    regularMessages.push(alert);
+                }
             });
-        }, 5000);
+            
+            // Regular messages fade out after 5 seconds
+            if (regularMessages.length > 0) {
+                setTimeout(function() {
+                    regularMessages.forEach(alert => {
+                        const bsAlert = new bootstrap.Alert(alert);
+                        bsAlert.close();
+                    });
+                }, 5000);
+            }
+            
+            // Payment messages stay for 3 minutes (180000 ms) with animation
+            if (paymentMessages.length > 0) {
+                // Add pulsating animation to payment messages
+                paymentMessages.forEach(alert => {
+                    // Add pulsating effect
+                    alert.style.animation = 'pulse 2s infinite';
+                });
+                
+                // Close after 3 minutes
+                setTimeout(function() {
+                    paymentMessages.forEach(alert => {
+                        const bsAlert = new bootstrap.Alert(alert);
+                        bsAlert.close();
+                    });
+                }, 180000); // 3 minutes
+            }
+        });
     </script>
+    
+    <style>
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+            }
+        }
+    </style>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
