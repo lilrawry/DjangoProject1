@@ -40,7 +40,30 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 ALLOWED_HOSTS = ['.up.railway.app', '.railway.app', '127.0.0.1', 'localhost']
 
 # CSRF Trusted Origins - required for Railway deployment
-CSRF_TRUSTED_ORIGINS = ['https://*.up.railway.app', 'https://*.railway.app', 'http://127.0.0.1:8000', 'http://localhost:8000']
+CSRF_TRUSTED_ORIGINS = [
+    'https://web-production-5336.up.railway.app',  # Your specific Railway domain
+    'https://*.up.railway.app',  # Wildcard for Railway domains
+    'https://*.railway.app',
+    'http://127.0.0.1:8000',
+    'http://localhost:8000'
+]
+
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    'https://web-production-5336.up.railway.app',
+    'http://127.0.0.1:8000',
+    'http://localhost:8000',
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
 
 # Application definition
@@ -52,6 +75,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',  # Added for CORS support
     'rooms',
     'import_export',
 ]
@@ -59,6 +83,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Added for CORS support
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
