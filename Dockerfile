@@ -25,5 +25,8 @@ COPY . .
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
-# Run gunicorn
-CMD gunicorn DjangoProject1.wsgi:application --bind 0.0.0.0:$PORT
+# Make start.sh executable
+RUN chmod +x /app/start.sh
+
+# Run the start.sh script
+CMD ["/app/start.sh"]
