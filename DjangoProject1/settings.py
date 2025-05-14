@@ -26,7 +26,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# Generate a secure key for production
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-t_p^#=3hi%w$eis22!#)($432lnrp*fddj*oj*8f2^$xtp6^#9')
+
+# If this is a production environment and no SECRET_KEY is set, generate a secure one
+if not os.environ.get('DEBUG', '').lower() == 'true' and SECRET_KEY.startswith('django-insecure-'):
+    import secrets
+    SECRET_KEY = secrets.token_urlsafe(50)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
@@ -151,6 +157,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Site URL for generating absolute URLs
 SITE_URL = os.environ.get('SITE_URL', 'http://127.0.0.1:8000')
+
+# Security settings for production
+# Only apply these settings in production
+if not DEBUG:
+    # HTTPS settings
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    
+    # Cookie settings
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    
+    # Content security
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_BROWSER_XSS_FILTER = True
 
 # Authentication settings
 LOGIN_URL = 'login'
