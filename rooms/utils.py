@@ -133,13 +133,29 @@ def generate_reservation_receipt(reservation):
         alignment=TA_CENTER
     )
     
-    # Add company logo if available
+    # Add EasyRoom logo
     try:
-        logo_path = os.path.join(settings.STATIC_ROOT, 'img/logo.png')
-        if os.path.exists(logo_path):
-            logo = Image(logo_path, width=2*cm, height=2*cm)
+        # Try to use the static file path first
+        logo_path = os.path.join(settings.BASE_DIR, 'static/img/easyroom-logo.svg')
+        
+        # If SVG doesn't work, try PNG alternative
+        if not os.path.exists(logo_path) or logo_path.endswith('.svg'):
+            # SVG not supported by ReportLab, use a PNG version if available
+            logo_path = os.path.join(settings.BASE_DIR, 'static/img/easyroom-logo.png')
+            
+            # If PNG doesn't exist, create a fallback version
+            if not os.path.exists(logo_path):
+                # Use the default logo path as fallback
+                logo_path = os.path.join(settings.BASE_DIR, 'static/img/easyroom-logo-small.svg')
+        
+        if os.path.exists(logo_path) and not logo_path.endswith('.svg'):
+            # Add logo with appropriate size
+            logo = Image(logo_path, width=4*cm, height=2*cm)
+            logo.hAlign = 'CENTER'  # Center the logo
             story.append(logo)
-    except:
+            story.append(Spacer(1, 0.5*cm))  # Add some space after logo
+    except Exception as e:
+        print(f"Error adding logo: {e}")  # For debugging
         pass  # Skip if logo not available
     
     # Add title

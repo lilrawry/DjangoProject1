@@ -1,10 +1,20 @@
-/* Custom Variables */
+/* EasyRoom Custom Variables */
 :root {
-    --primary-gradient: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --primary-color: #4e73df;
+    --secondary-color: #2e59d9;
+    --success-color: #1cc88a;
+    --info-color: #36b9cc;
+    --warning-color: #f6c23e;
+    --danger-color: #e74a3b;
+    --light-color: #f8f9fc;
+    --dark-color: #5a5c69;
+    --primary-gradient: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%);
+    --secondary-gradient: linear-gradient(135deg, #7e8ce0 0%, #4e73df 100%);
+    --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
     --transition-speed: 0.3s;
+    --border-radius: 0.35rem;
 }
 
 /* General Styles */

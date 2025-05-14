@@ -42,7 +42,7 @@
         .section-title {
             font-size: 18px;
             font-weight: bold;
-            color: #4e73df;
+            color: #2e59d9;
             margin-bottom: 10px;
         }
         .info-block {
@@ -98,9 +98,8 @@
             border-bottom: 1px solid #ddd;
         }
         table th {
-            background-color: #f2f5ff;
-            color: #4e73df;
-            font-weight: bold;
+            background-color: #f0f4ff;
+            color: #2e59d9;
         }
         .text-right {
             text-align: right;
@@ -116,7 +115,29 @@
 </head>
 <body>
     <div class="header">
-        <img src="{{ logo_url }}" class="logo" alt="Espace Medina Logo">
+        <div class="logo-container">
+            <!-- Logo EasyRoom avec couleurs #4e73df et #2e59d9 -->
+            <svg width="200" height="100" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="logo">
+                <defs>
+                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#4e73df"/>
+                        <stop offset="100%" stop-color="#2e59d9"/>
+                    </linearGradient>
+                </defs>
+                <g transform="translate(25, 25)">
+                    <!-- Building/House Icon -->
+                    <path d="M75,0 L150,50 L140,65 L120,50 L120,140 L30,140 L30,50 L10,65 L0,50 L75,0 Z" fill="url(#logoGradient)"></path>
+                    <!-- Door -->
+                    <rect x="60" y="80" width="30" height="60" rx="2" fill="#FFFFFF"></rect>
+                    <!-- Windows -->
+                    <rect x="40" y="60" width="20" height="20" rx="2" fill="#FFFFFF"></rect>
+                    <rect x="90" y="60" width="20" height="20" rx="2" fill="#FFFFFF"></rect>
+                    <!-- Key Hole -->
+                    <circle cx="80" cy="110" r="3" fill="#2e59d9"></circle>
+                    <rect x="80" y="110" width="3" height="10" rx="1" fill="#2e59d9" transform="translate(81.500000, 115.000000) rotate(90.000000) translate(-81.500000, -115.000000)"></rect>
+                </g>
+            </svg>
+        </div>
         <h1 class="receipt-title">Reçu de Paiement</h1>
         <div class="receipt-number">Reçu N° {{ payment.id }}</div>
     </div>
@@ -187,12 +208,29 @@
 
     <div class="contact">
         <p>Pour toute question concernant ce reçu, veuillez contacter notre service client:</p>
-        <p>Email: contact@espacemedina.ma | Téléphone: +212 5XX-XXXXXX</p>
+        <p>Email: contact@easyroom.com | Téléphone: +212 5XX-XXXXXX</p>
     </div>
 
     <div class="footer">
-        <p>Espace Medina - Système de réservation de salles</p>
-        <p>© {{ today|date:"Y" }} Espace Medina. Tous droits réservés.</p>
+        <!-- Mini logo EasyRoom -->
+        <div style="text-align: center; margin-bottom: 10px;">
+            <svg width="50" height="50" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="display: inline-block;">
+                <defs>
+                    <linearGradient id="footerLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#4e73df"/>
+                        <stop offset="100%" stop-color="#2e59d9"/>
+                    </linearGradient>
+                </defs>
+                <g transform="translate(25, 25)">
+                    <path d="M75,0 L150,50 L140,65 L120,50 L120,140 L30,140 L30,50 L10,65 L0,50 L75,0 Z" fill="url(#footerLogoGradient)"></path>
+                    <rect x="60" y="80" width="30" height="60" rx="2" fill="#FFFFFF"></rect>
+                    <rect x="40" y="60" width="20" height="20" rx="2" fill="#FFFFFF"></rect>
+                    <rect x="90" y="60" width="20" height="20" rx="2" fill="#FFFFFF"></rect>
+                </g>
+            </svg>
+        </div>
+        <p>EasyRoom - Système de réservation de salles</p>
+        <p>© {{ today|date:"Y" }} EasyRoom. Tous droits réservés.</p>
     </div>
 </body>
 </html>

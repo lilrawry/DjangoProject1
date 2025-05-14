@@ -1,24 +1,34 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Système de Réservation{% endblock %}</title>
+    <title>{% block title %}EasyRoom - Réservation de Salles{% endblock %}</title>
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'img/easyroom-logo-small.svg' %}" type="image/svg+xml">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    {% load static %}
     <link href="{% static 'css/custom.css' %}" rel="stylesheet">
     {% block extra_css %}{% endblock %}
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'rooms:room_list' %}">
-                <i class="fas fa-building me-2"></i>Système de Réservation
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'rooms:room_list' %}">
+                <img src="{% static 'img/easyroom-logo-small.svg' %}" alt="EasyRoom" width="40" height="40" class="me-2">
+                <span class="fw-bold">EasyRoom</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -27,7 +37,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'rooms:room_list' %}">
-                            <i class="fas fa-list me-1"></i>Salles
+                            <i class="fas fa-door-open me-1"></i>Salles
                         </a>
                     </li>
                     {% if user.is_authenticated %}
@@ -37,10 +47,21 @@
                             </a>
                         </li>
                         {% if user.is_staff %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'rooms:admin_dashboard' %}">
-                                    <i class="fas fa-chart-line me-1"></i>Dashboard Admin
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-chart-line me-1"></i>Administration
                                 </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
+                                    <li><a class="dropdown-item" href="{% url 'rooms:admin_dashboard' %}"><i class="fas fa-tachometer-alt me-2"></i>Tableau de bord</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'rooms:admin_dashboard_rooms' %}"><i class="fas fa-door-open me-2"></i>Salles</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'rooms:admin_dashboard_reservations' %}"><i class="fas fa-calendar-alt me-2"></i>Réservations</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'rooms:admin_dashboard_users' %}"><i class="fas fa-users me-2"></i>Utilisateurs</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'rooms:admin_dashboard_groups' %}"><i class="fas fa-user-tag me-2"></i>Groupes</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'rooms:admin_dashboard_pending_payments' %}"><i class="fas fa-credit-card me-2"></i>Paiements en attente</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'rooms:admin_dashboard_pending_reservations' %}"><i class="fas fa-hourglass-half me-2"></i>Réservations en attente</a></li>
+                                </ul>
                             </li>
                         {% endif %}
                         <li class="nav-item">
