@@ -1,53 +1,60 @@
 # Django Project Deployment Guide
 
-This Django project has been configured for deployment on Render. Follow these instructions to deploy your application.
+This Django project has been configured for deployment on Railway. Follow these instructions to deploy your application.
 
 ## Prerequisites
 
-- Render account: [https://render.com](https://render.com)
+- Railway account: [https://railway.app](https://railway.app)
 - Git + GitHub account
 
 ## Project Configuration
 
-This project has already been configured for Render deployment with:
+This project has already been configured for Railway deployment with:
 
 1. **WhiteNoise middleware** for static files
 2. **Gunicorn WSGI configuration**
-3. **Updated ALLOWED_HOSTS** for Render domains
+3. **Updated ALLOWED_HOSTS** for Railway domains
 4. **Required dependencies** in requirements.txt
 5. **Environment variables** configuration
 6. **PostgreSQL database** support via dj-database-url
 
 ## Deployment Steps
 
-### Method 1: Using Render Dashboard
+### Method 1: Using Railway Dashboard
 
 1. Push this project to a GitHub repository
-2. Log in to [Render Dashboard](https://dashboard.render.com/)
-3. Click "New" and select "Web Service"
+2. Log in to [Railway Dashboard](https://railway.app/dashboard)
+3. Click "New Project" and select "Deploy from GitHub repo"
 4. Connect your GitHub repository
-5. Configure your web service:
-   - Name: Choose a name for your service
-   - Environment: Python
-   - Region: Choose the closest to your users
-   - Branch: main (or your default branch)
-   - Build Command: `./build.sh`
-   - Start Command: `gunicorn DjangoProject1.wsgi:application`
-6. Add the following environment variables:
+5. Railway will automatically detect your project configuration
+6. Add the following environment variables in the Variables tab:
    - `SECRET_KEY`: Generate a secure random key
    - `DEBUG`: false
    - `DJANGO_SETTINGS_MODULE`: DjangoProject1.settings
-   - `SITE_URL`: Your Render URL (e.g., https://your-app.onrender.com)
-7. Click "Create Web Service"
+   - `SITE_URL`: Your Railway URL (e.g., https://your-app.up.railway.app)
+7. Click "Deploy"
 
-### Method 2: Using render.yaml (Recommended)
+### Method 2: Using Railway CLI (Alternative)
 
-1. Push this project to a GitHub repository
-2. Log in to [Render Dashboard](https://dashboard.render.com/)
-3. Click "New" and select "Blueprint"
-4. Connect your GitHub repository
-5. Render will automatically detect the render.yaml file and set up your services
-6. Review the configuration and click "Apply"
+1. Install the Railway CLI:
+   ```bash
+   npm i -g @railway/cli
+   ```
+
+2. Login to Railway:
+   ```bash
+   railway login
+   ```
+
+3. Link your project:
+   ```bash
+   railway link
+   ```
+
+4. Deploy your project:
+   ```bash
+   railway up
+   ```
 
 ## Local Development
 
@@ -74,7 +81,13 @@ This project has already been configured for Render deployment with:
 
 ## Database Configuration
 
-This project is configured to use SQLite locally and PostgreSQL on Render. The database URL is automatically configured via the `DATABASE_URL` environment variable on Render.
+This project is configured to use SQLite locally and PostgreSQL on Railway. The database URL is automatically configured via the `DATABASE_URL` environment variable on Railway.
+
+To set up a PostgreSQL database on Railway:
+
+1. In your Railway project, click "New" and select "Database" → "PostgreSQL"
+2. Once created, go to the Variables tab of your web service
+3. Railway will automatically add the `DATABASE_URL` variable from your PostgreSQL instance
 
 ## Environment Variables
 

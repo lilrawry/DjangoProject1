@@ -37,7 +37,7 @@ if not os.environ.get('DEBUG', '').lower() == 'true' and SECRET_KEY.startswith('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['.onrender.com', '.vercel.app', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['.up.railway.app', '.railway.app', '127.0.0.1', 'localhost']
 
 
 # Application definition
