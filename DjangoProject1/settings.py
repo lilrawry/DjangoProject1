@@ -39,6 +39,9 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = ['.up.railway.app', '.railway.app', '127.0.0.1', 'localhost']
 
+# CSRF Trusted Origins - required for Railway deployment
+CSRF_TRUSTED_ORIGINS = ['https://*.up.railway.app', 'https://*.railway.app', 'http://127.0.0.1:8000', 'http://localhost:8000']
+
 
 # Application definition
 
@@ -161,8 +164,9 @@ SITE_URL = os.environ.get('SITE_URL', 'http://127.0.0.1:8000')
 # Security settings for production
 # Only apply these settings in production
 if not DEBUG:
-    # HTTPS settings
-    SECURE_SSL_REDIRECT = True
+    # HTTPS settings - Disable SSL redirect if causing redirect loops
+    # Only enable this if you're sure your hosting environment supports HTTPS properly
+    SECURE_SSL_REDIRECT = False  # Changed to False to prevent redirect loops
     SECURE_HSTS_SECONDS = 31536000  # 1 year
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
@@ -174,6 +178,9 @@ if not DEBUG:
     # Content security
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_BROWSER_XSS_FILTER = True
+    
+    # Session settings to help with cookie issues
+    SESSION_COOKIE_SAMESITE = 'Lax'  # Helps with cross-site request issues
 
 # Authentication settings
 LOGIN_URL = 'login'
@@ -195,6 +202,8 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 SESSION_COOKIE_AGE = 86400  # 24 hours in seconds
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Session expires when browser closes
+SESSION_COOKIE_SAMESITE = 'Lax'  # Helps with cross-site request issues
+SESSION_COOKIE_HTTPONLY = True  # Prevents JavaScript from accessing the cookie
 
 LOGGING = {
     'version': 1,
