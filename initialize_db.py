@@ -1,6 +1,9 @@
 import os
 import django
 import sys
+import requests
+from io import BytesIO
+from django.core.files.base import ContentFile
 
 # Set up Django environment
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -9,10 +12,36 @@ django.setup()
 
 from rooms.models import Room
 
+def download_image(url, room, index):
+    """Download an image from URL and save it to the room"""
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            # Create a unique filename
+            filename = f"room_{index}_image.jpg"
+            # Save the image to the room
+            room.image.save(filename, ContentFile(response.content), save=True)
+            print(f"Downloaded image for {room.name}")
+            return True
+        else:
+            print(f"Failed to download image: {response.status_code}")
+            return False
+    except Exception as e:
+        print(f"Error downloading image: {e}")
+        return False
+
 def create_sample_rooms():
     """Create sample rooms if none exist"""
     if Room.objects.count() == 0:
         print("Creating sample rooms...")
+        
+        # Image URLs for different types of conference rooms
+        image_urls = [
+            'https://images.unsplash.com/photo-1517502884422-41eaead166d4?q=80&w=1025&auto=format&fit=crop',  # Conference room A
+            'https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1169&auto=format&fit=crop',  # Meeting room B
+            'https://images.unsplash.com/photo-1517502884422-41eaead166d4?q=80&w=1025&auto=format&fit=crop',  # Multipurpose room C
+            'https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1169&auto=format&fit=crop',  # Creative studio D
+        ]
         
         # Create sample rooms
         rooms_data = [
@@ -50,11 +79,18 @@ def create_sample_rooms():
             }
         ]
         
-        for room_data in rooms_data:
-            Room.objects.create(**room_data)
+        created_rooms = []
+        for i, room_data in enumerate(rooms_data):
+            # Create the room
+            room = Room.objects.create(**room_data)
+            created_rooms.append(room)
             print(f"Created room: {room_data['name']}")
+            
+            # Try to download and attach image
+            if i < len(image_urls):
+                download_image(image_urls[i], room, i)
         
-        print(f"Created {len(rooms_data)} sample rooms")
+        print(f"Created {len(created_rooms)} sample rooms")
     else:
         print(f"Skipping room creation, {Room.objects.count()} rooms already exist")
 
