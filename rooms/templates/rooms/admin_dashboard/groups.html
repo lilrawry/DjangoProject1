@@ -1,0 +1,240 @@
+{% extends 'rooms/admin_dashboard/base_admin.html' %}
+{% load static %}
+
+{% block admin_title %}
+<i class="fas fa-user-tag me-2"></i>{{ title }}
+{% endblock %}
+
+{% block admin_actions %}
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addGroupModal">
+    <i class="fas fa-plus me-1"></i>Ajouter un groupe
+</button>
+{% endblock %}
+
+{% block admin_content %}
+<div class="row mb-4">
+    <div class="col-md-6 mx-auto">
+        <div class="stat-box">
+            <i class="fas fa-user-tag"></i>
+            <div class="stat-value">{{ groups.count }}</div>
+            <div class="stat-label">Total des groupes</div>
+        </div>
+    </div>
+</div>
+
+<div class="card dashboard-card">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-list me-2"></i>Liste des groupes</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom du groupe</th>
+                        <th>Nombre d'utilisateurs</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stat in group_stats %}
+                    <tr>
+                        <td>{{ stat.group.id }}</td>
+                        <td>{{ stat.group.name }}</td>
+                        <td>{{ stat.user_count }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-primary edit-group-btn" 
+                                        data-bs-toggle="modal" data-bs-target="#editGroupModal"
+                                        data-group-id="{{ stat.group.id }}"
+                                        data-group-name="{{ stat.group.name }}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-danger delete-group-btn"
+                                        data-bs-toggle="modal" data-bs-target="#deleteGroupModal"
+                                        data-group-id="{{ stat.group.id }}"
+                                        data-group-name="{{ stat.group.name }}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-info view-users-btn"
+                                        data-bs-toggle="modal" data-bs-target="#viewUsersModal"
+                                        data-group-id="{{ stat.group.id }}"
+                                        data-group-name="{{ stat.group.name }}">
+                                    <i class="fas fa-users"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">Aucun groupe disponible</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Add Group Modal -->
+<div class="modal fade" id="addGroupModal" tabindex="-1" aria-labelledby="addGroupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addGroupModalLabel">Ajouter un groupe</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="addGroupForm" method="post" action="#">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="groupName" class="form-label">Nom du groupe</label>
+                        <input type="text" class="form-control" id="groupName" name="name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Group Modal -->
+<div class="modal fade" id="editGroupModal" tabindex="-1" aria-labelledby="editGroupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editGroupModalLabel">Modifier un groupe</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editGroupForm" method="post" action="#">
+                {% csrf_token %}
+                <input type="hidden" id="editGroupId" name="group_id">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editGroupName" class="form-label">Nom du groupe</label>
+                        <input type="text" class="form-control" id="editGroupName" name="name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Group Modal -->
+<div class="modal fade" id="deleteGroupModal" tabindex="-1" aria-labelledby="deleteGroupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteGroupModalLabel">Supprimer un groupe</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="deleteGroupForm" method="post" action="#">
+                {% csrf_token %}
+                <input type="hidden" id="deleteGroupId" name="group_id">
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir supprimer le groupe <strong id="deleteGroupName"></strong>?</p>
+                    <p class="text-danger">Cette action est irréversible et supprimera également toutes les associations d'utilisateurs à ce groupe.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- View Users Modal -->
+<div class="modal fade" id="viewUsersModal" tabindex="-1" aria-labelledby="viewUsersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewUsersModalLabel">Utilisateurs du groupe <span id="viewGroupName"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom d'utilisateur</th>
+                                <th>Email</th>
+                                <th>Nom complet</th>
+                            </tr>
+                        </thead>
+                        <tbody id="groupUsersList">
+                            <!-- Users will be loaded here via JavaScript -->
+                            <tr>
+                                <td colspan="4" class="text-center">Chargement des utilisateurs...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Edit Group Modal
+        const editButtons = document.querySelectorAll('.edit-group-btn');
+        editButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const groupId = this.getAttribute('data-group-id');
+                const groupName = this.getAttribute('data-group-name');
+                
+                document.getElementById('editGroupId').value = groupId;
+                document.getElementById('editGroupName').value = groupName;
+                
+                // Update form action
+                document.getElementById('editGroupForm').action = `/admin/groups/${groupId}/edit/`;
+            });
+        });
+        
+        // Delete Group Modal
+        const deleteButtons = document.querySelectorAll('.delete-group-btn');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const groupId = this.getAttribute('data-group-id');
+                const groupName = this.getAttribute('data-group-name');
+                
+                document.getElementById('deleteGroupId').value = groupId;
+                document.getElementById('deleteGroupName').textContent = groupName;
+                
+                // Update form action
+                document.getElementById('deleteGroupForm').action = `/admin/groups/${groupId}/delete/`;
+            });
+        });
+        
+        // View Users Modal
+        const viewUsersButtons = document.querySelectorAll('.view-users-btn');
+        viewUsersButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const groupId = this.getAttribute('data-group-id');
+                const groupName = this.getAttribute('data-group-name');
+                
+                document.getElementById('viewGroupName').textContent = groupName;
+                
+                // Here you would typically make an AJAX call to get users in the group
+                // For now, we'll just show a placeholder message
+                document.getElementById('groupUsersList').innerHTML = '<tr><td colspan="4" class="text-center">Fonctionnalité à implémenter</td></tr>';
+            });
+        });
+    });
+</script>
+{% endblock %}

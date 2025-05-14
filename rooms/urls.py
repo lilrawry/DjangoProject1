@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views, views_admin, views_user_admin
+from . import views, views_admin, views_user_admin, views_admin_dashboard
 
 app_name = 'rooms'
 
@@ -21,6 +21,14 @@ urlpatterns = [
     path('payment/<int:payment_id>/reject/', views.reject_payment, name='reject_payment'),
     path('reservation/<int:reservation_id>/approve/', views.approve_reservation, name='approve_reservation'),
     path('reservation/<int:reservation_id>/reject/', views.reject_reservation, name='reject_reservation'),
+    
+    # Admin Dashboard Pages
+    path('admin-dashboard/rooms/', views_admin_dashboard.admin_rooms, name='admin_dashboard_rooms'),
+    path('admin-dashboard/reservations/', views_admin_dashboard.admin_reservations, name='admin_dashboard_reservations'),
+    path('admin-dashboard/users/', views_admin_dashboard.admin_users, name='admin_dashboard_users'),
+    path('admin-dashboard/groups/', views_admin_dashboard.admin_groups, name='admin_dashboard_groups'),
+    path('admin-dashboard/pending-payments/', views_admin_dashboard.admin_pending_payments, name='admin_dashboard_pending_payments'),
+    path('admin-dashboard/pending-reservations/', views_admin_dashboard.admin_pending_reservations, name='admin_dashboard_pending_reservations'),
     
     # Auth URLs
     path('login/', views.custom_login, name='custom_login'),

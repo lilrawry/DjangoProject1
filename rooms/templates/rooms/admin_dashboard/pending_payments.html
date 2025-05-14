@@ -1,0 +1,98 @@
+{% extends 'rooms/admin_dashboard/base_admin.html' %}
+{% load static %}
+
+{% block admin_title %}
+<i class="fas fa-credit-card me-2"></i>{{ title }}
+{% endblock %}
+
+{% block admin_content %}
+<div class="row mb-4">
+    <div class="col-md-6 mx-auto">
+        <div class="stat-box">
+            <i class="fas fa-credit-card text-warning"></i>
+            <div class="stat-value">{{ pending_payments.count }}</div>
+            <div class="stat-label">Paiements en attente</div>
+        </div>
+    </div>
+    <div class="col-md-6 mx-auto">
+        <div class="stat-box">
+            <i class="fas fa-euro-sign text-success"></i>
+            <div class="stat-value">{{ total_pending_amount }} €</div>
+            <div class="stat-label">Montant total en attente</div>
+        </div>
+    </div>
+</div>
+
+<div class="card dashboard-card">
+    <div class="card-header bg-warning text-white">
+        <h5 class="mb-0"><i class="fas fa-list me-2"></i>Liste des paiements en attente</h5>
+    </div>
+    <div class="card-body">
+        {% if pending_payments %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Réservation</th>
+                        <th>Utilisateur</th>
+                        <th>Montant</th>
+                        <th>Date du paiement</th>
+                        <th>Méthode</th>
+                        <th>ID de transaction</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in pending_payments %}
+                    <tr>
+                        <td>{{ payment.id }}</td>
+                        <td>
+                            <a href="#" data-bs-toggle="tooltip" title="Salle: {{ payment.reservation.room.name }}
+Début: {{ payment.reservation.start_time|date:'d/m/Y H:i' }}
+Fin: {{ payment.reservation.end_time|date:'d/m/Y H:i' }}">
+                                #{{ payment.reservation.id }}
+                            </a>
+                        </td>
+                        <td>{{ payment.reservation.user.username }}</td>
+                        <td>{{ payment.amount }} €</td>
+                        <td>{{ payment.payment_date|date:"d/m/Y H:i" }}</td>
+                        <td>{{ payment.payment_method }}</td>
+                        <td>{{ payment.transaction_id }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{% url 'rooms:approve_payment' payment.id %}" class="btn btn-sm btn-success">
+                                    <i class="fas fa-check me-1"></i>Approuver
+                                </a>
+                                <a href="{% url 'rooms:reject_payment' payment.id %}" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-times me-1"></i>Rejeter
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>Aucun paiement en attente pour le moment.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl, {
+                html: true
+            });
+        });
+    });
+</script>
+{% endblock %}

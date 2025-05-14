@@ -1,0 +1,89 @@
+{% extends 'rooms/admin_dashboard/base_admin.html' %}
+{% load static %}
+
+{% block admin_title %}
+<i class="fas fa-hourglass-half me-2"></i>{{ title }}
+{% endblock %}
+
+{% block admin_content %}
+<div class="row mb-4">
+    <div class="col-md-6 mx-auto">
+        <div class="stat-box">
+            <i class="fas fa-hourglass-half text-warning"></i>
+            <div class="stat-value">{{ pending_reservations.count }}</div>
+            <div class="stat-label">Réservations en attente</div>
+        </div>
+    </div>
+    <div class="col-md-6 mx-auto">
+        <div class="stat-box">
+            <i class="fas fa-euro-sign text-success"></i>
+            <div class="stat-value">{{ total_pending_amount }} €</div>
+            <div class="stat-label">Montant total en attente</div>
+        </div>
+    </div>
+</div>
+
+<div class="card dashboard-card">
+    <div class="card-header bg-secondary text-white">
+        <h5 class="mb-0"><i class="fas fa-list me-2"></i>Liste des réservations en attente</h5>
+    </div>
+    <div class="card-body">
+        {% if pending_reservations %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Salle</th>
+                        <th>Utilisateur</th>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
+                        <th>Prix total</th>
+                        <th>Créée le</th>
+                        <th>Paiement</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reservation in pending_reservations %}
+                    <tr>
+                        <td>{{ reservation.id }}</td>
+                        <td>{{ reservation.room.name }}</td>
+                        <td>{{ reservation.user.username }}</td>
+                        <td>{{ reservation.start_time|date:"d/m/Y H:i" }}</td>
+                        <td>{{ reservation.end_time|date:"d/m/Y H:i" }}</td>
+                        <td>{{ reservation.total_price }} €</td>
+                        <td>{{ reservation.created_at|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            {% if reservation.is_paid %}
+                            <span class="badge bg-success">Payé</span>
+                            {% else %}
+                            <span class="badge bg-danger">Non payé</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{% url 'rooms:approve_reservation' reservation.id %}" class="btn btn-sm btn-success">
+                                    <i class="fas fa-check me-1"></i>Approuver
+                                </a>
+                                <a href="{% url 'rooms:reject_reservation' reservation.id %}" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-times me-1"></i>Rejeter
+                                </a>
+                                <a href="{% url 'rooms:download_pdf' reservation.id %}" class="btn btn-sm btn-outline-info">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>Aucune réservation en attente pour le moment.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

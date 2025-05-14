@@ -43,7 +43,7 @@
                     <p class="stat-card-title">Salles</p>
                     <h3 class="stat-card-value">{{ stats.rooms }}</h3>
                     <div class="stat-card-actions">
-                        <a href="{% url 'rooms:manage_rooms' %}" class="btn btn-sm btn-primary">Gérer</a>
+                        <a href="{% url 'rooms:admin_dashboard_rooms' %}" class="btn btn-sm btn-primary">Gérer</a>
                         <a href="{% url 'rooms:add_room' %}" class="btn btn-sm btn-outline-primary">
                             <i class="fas fa-plus"></i>
                         </a>
@@ -60,10 +60,7 @@
                     <p class="stat-card-title">Réservations</p>
                     <h3 class="stat-card-value">{{ stats.reservations }}</h3>
                     <div class="stat-card-actions">
-                        <a href="{% url 'rooms:manage_rooms' %}" class="btn btn-sm btn-primary">Gérer</a>
-                        <a href="{% url 'rooms:add_room' %}" class="btn btn-sm btn-outline-primary">
-                            <i class="fas fa-plus"></i>
-                        </a>
+                        <a href="{% url 'rooms:admin_dashboard_reservations' %}" class="btn btn-sm btn-primary">Gérer</a>
                     </div>
                 </div>
             </div>
@@ -77,8 +74,8 @@
                     <p class="stat-card-title">Utilisateurs</p>
                     <h3 class="stat-card-value">{{ stats.users }}</h3>
                     <div class="stat-card-actions">
-                        <a href="{% url 'rooms:manage_rooms' %}" class="btn btn-sm btn-primary">Gérer</a>
-                        <a href="{% url 'rooms:add_room' %}" class="btn btn-sm btn-outline-primary">
+                        <a href="{% url 'rooms:admin_dashboard_users' %}" class="btn btn-sm btn-primary">Gérer</a>
+                        <a href="{% url 'rooms:add_user' %}" class="btn btn-sm btn-outline-primary">
                             <i class="fas fa-plus"></i>
                         </a>
                     </div>
@@ -94,10 +91,7 @@
                     <p class="stat-card-title">Groupes</p>
                     <h3 class="stat-card-value">{{ stats.groups }}</h3>
                     <div class="stat-card-actions">
-                        <a href="{% url 'rooms:manage_rooms' %}" class="btn btn-sm btn-primary">Gérer</a>
-                        <a href="{% url 'rooms:add_room' %}" class="btn btn-sm btn-outline-primary">
-                            <i class="fas fa-plus"></i>
-                        </a>
+                        <a href="{% url 'rooms:admin_dashboard_groups' %}" class="btn btn-sm btn-primary">Gérer</a>
                     </div>
                 </div>
             </div>
@@ -111,7 +105,7 @@
                     <p class="stat-card-title">Paiements en attente</p>
                     <h3 class="stat-card-value">{{ stats.pending_payments }}</h3>
                     <div class="stat-card-actions">
-                        <a href="#pending-payments" class="btn btn-sm btn-danger">Voir</a>
+                        <a href="{% url 'rooms:admin_dashboard_pending_payments' %}" class="btn btn-sm btn-danger">Gérer</a>
                     </div>
                 </div>
             </div>
@@ -125,7 +119,7 @@
                     <p class="stat-card-title">Réservations en attente</p>
                     <h3 class="stat-card-value">{{ stats.pending_reservations }}</h3>
                     <div class="stat-card-actions">
-                        <a href="#pending-reservations" class="btn btn-sm btn-secondary">Voir</a>
+                        <a href="{% url 'rooms:admin_dashboard_pending_reservations' %}" class="btn btn-sm btn-secondary">Gérer</a>
                     </div>
                 </div>
             </div>
