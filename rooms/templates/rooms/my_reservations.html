@@ -58,8 +58,9 @@
                                     <li><i class="fas fa-calendar-plus me-2"></i> Réservée le {{ reservation.created_at|date:"d/m/Y" }}</li>
                                     {% if reservation.payment_info and reservation.payment_info.status == 'pending' %}
                                     <li class="mt-2">
-                                        <div class="alert alert-info py-2 mb-0">
-                                            <i class="fas fa-info-circle me-1"></i> Paiement en cours de traitement. Vous n'avez pas besoin de payer à nouveau.
+                                        <div class="alert alert-warning py-2 mb-0">
+                                            <i class="fas fa-hourglass-half me-1"></i> <strong>Paiement en attente d'approbation</strong><br>
+                                            Votre paiement a été enregistré et est en attente d'approbation par un administrateur. Vous recevrez une confirmation une fois qu'il sera approuvé.
                                         </div>
                                     </li>
                                     {% endif %}

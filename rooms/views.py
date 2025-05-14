@@ -582,7 +582,7 @@ def process_payment(request, reservation_id):
             reservation.status = 'pending'
             reservation.save()
             
-            messages.success(request, "Paiement en cours de traitement.")
+            messages.success(request, "Votre paiement a été enregistré et est en attente d'approbation par un administrateur. Vous recevrez une confirmation une fois qu'il sera approuvé.")
             return redirect('rooms:my_reservations')
     else:
         form = PaymentForm()
