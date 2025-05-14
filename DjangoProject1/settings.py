@@ -14,6 +14,10 @@ from pathlib import Path
 import os
 import dj_database_url
 
+# Load environment variables from .env file
+from dotenv import load_dotenv
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,12 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-t_p^#=3hi%w$eis22!#)($432lnrp*fddj*oj*8f2^$xtp6^#9'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-t_p^#=3hi%w$eis22!#)($432lnrp*fddj*oj*8f2^$xtp6^#9')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['.onrender.com', '.vercel.app', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -146,7 +150,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Site URL for generating absolute URLs
-SITE_URL = 'http://127.0.0.1:8000'
+SITE_URL = os.environ.get('SITE_URL', 'http://127.0.0.1:8000')
 
 # Authentication settings
 LOGIN_URL = 'login'
