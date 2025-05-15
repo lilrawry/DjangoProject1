@@ -1,5 +1,6 @@
 /* EasyRoom Custom Variables */
 :root {
+    /* Light Mode Variables */
     --primary-color: #4e73df;
     --secondary-color: #2e59d9;
     --success-color: #1cc88a;
@@ -15,16 +16,118 @@
     --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
     --transition-speed: 0.3s;
     --border-radius: 0.35rem;
+    
+    /* Theme Colors */
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --card-bg: #ffffff;
+    --border-color: #dee2e6;
+    --navbar-bg: var(--primary-gradient);
+    --footer-bg: var(--primary-gradient);
+    --navbar-text: #ffffff;
+    --header-color: #333333;
+    --input-bg: #ffffff;
+    --input-text: #212529;
+}
+
+/* Dark Mode Theme */
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #e9ecef;
+    --card-bg: #1e1e1e;
+    --border-color: #4e4e4e;
+    --navbar-bg: linear-gradient(135deg, #2e3445 0%, #1a1f2d 100%);
+    --footer-bg: linear-gradient(135deg, #2e3445 0%, #1a1f2d 100%);
+    --navbar-text: #ffffff;
+    --header-color: #f0f0f0;
+    --input-bg: #2c2c2c;
+    --input-text: #e9ecef;
+    --shadow-sm: 0 0.125rem 0.25rem rgba(255, 255, 255, 0.035);
+    --shadow-md: 0 0.5rem 1rem rgba(255, 255, 255, 0.05);
+    --shadow-lg: 0 1rem 3rem rgba(255, 255, 255, 0.075);
 }
 
 /* General Styles */
 body {
-    background-color: #f8f9fa;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Animated Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: var(--bg-color);
+    opacity: 0.7;
+}
+
+/* Animated Particles */
+.bg-animation-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.bg-animation-wrapper .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--primary-color);
+    opacity: 0.3;
+    animation: float 15s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+    }
+    25% {
+        transform: translateY(-30px) translateX(15px);
+    }
+    50% {
+        transform: translateY(-15px) translateX(30px);
+    }
+    75% {
+        transform: translateY(-45px) translateX(-15px);
+    }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--navbar-text);
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+.theme-toggle i {
+    font-size: 1.2rem;
 }
 
 /* Card Hover Effects */
 .card {
-    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color 0.3s ease;
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
 }
 
 .card:hover {
@@ -94,7 +197,8 @@ body {
 
 /* Navigation Improvements */
 .navbar {
-    background: var(--primary-gradient) !important;
+    background: var(--navbar-bg) !important;
+    transition: background 0.3s ease;
 }
 
 .navbar .nav-link {
@@ -122,6 +226,10 @@ body {
 .form-control {
     border-radius: 10px;
     padding: 0.75rem 1rem;
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .input-group-text {
@@ -142,9 +250,10 @@ body {
 
 /* Footer Enhancements */
 footer {
-    background: var(--primary-gradient);
+    background: var(--footer-bg);
     padding: 2rem 0;
     margin-top: auto;
+    transition: background 0.3s ease;
 }
 
 /* Responsive Adjustments */
@@ -169,11 +278,57 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255,255,255,0.8);
+    background: rgba(var(--bg-color-rgb, 255, 255, 255), 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
+}
+
+/* Dropdown styles for dark mode */
+.dropdown-menu {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.dropdown-item {
+    color: var(--text-color);
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(var(--primary-color-rgb, 78, 115, 223), 0.1);
+}
+
+/* Table styles for dark mode */
+table {
+    color: var(--text-color);
+    border-color: var(--border-color);
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(var(--primary-color-rgb, 78, 115, 223), 0.05);
+}
+
+/* Heading colors */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--header-color);
+    transition: color 0.3s ease;
+}
+
+/* RGB Color Variables for opacity usage */
+:root {
+    --primary-color-rgb: 78, 115, 223;
+    --bg-color-rgb: 248, 249, 250;
+    --text-color-rgb: 33, 37, 41;
+}
+
+[data-theme="dark"] {
+    --primary-color-rgb: 78, 115, 223;
+    --bg-color-rgb: 18, 18, 18;
+    --text-color-rgb: 233, 236, 239;
 }
 
 .spinner-border {

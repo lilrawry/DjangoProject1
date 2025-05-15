@@ -23,6 +23,8 @@
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
+    <!-- Animated Background -->
+    <div class="bg-animation-wrapper" id="bgAnimation"></div>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
@@ -39,6 +41,13 @@
                         <a class="nav-link" href="{% url 'rooms:room_list' %}">
                             <i class="fas fa-door-open me-1"></i>Salles
                         </a>
+                    </li>
+                    <!-- Theme Toggle Button -->
+                    <li class="nav-item">
+                        <button id="themeToggle" class="nav-link theme-toggle" aria-label="Toggle Dark Mode">
+                            <i class="fas fa-moon"></i>
+                            <span class="ms-1 d-none d-lg-inline-block">Theme</span>
+                        </button>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
@@ -186,6 +195,79 @@
                 }, 180000); // 3 minutes
             }
         });
+
+        // Theme Toggle Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            const htmlTag = document.documentElement;
+            
+            // Check for saved theme preference or use user's preferred color scheme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                htmlTag.setAttribute('data-theme', savedTheme);
+                updateThemeIcon(savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                htmlTag.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                updateThemeIcon('dark');
+            }
+            
+            // Toggle theme when button is clicked
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = htmlTag.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                htmlTag.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+            
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            }
+            
+            // Initialize background animation
+            createBackgroundAnimation();
+        });
+        
+        // Background Animation
+        function createBackgroundAnimation() {
+            const wrapper = document.getElementById('bgAnimation');
+            const numberOfParticles = 15;
+            const colors = ['#4e73df', '#36b9cc', '#1cc88a', '#f6c23e'];
+            const sizes = [10, 15, 20, 25, 30];
+            
+            for (let i = 0; i < numberOfParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = sizes[Math.floor(Math.random() * sizes.length)];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = 10 + Math.random() * 20;
+                
+                // Apply styles
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.background = color;
+                particle.style.left = `${left}%`;
+                particle.style.top = `${top}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                wrapper.appendChild(particle);
+            }
+        }
     </script>
     
     <style>
