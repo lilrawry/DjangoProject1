@@ -46,7 +46,7 @@
                     <li class="nav-item">
                         <button id="themeToggle" class="nav-link theme-toggle" aria-label="Toggle Dark Mode">
                             <i class="fas fa-moon"></i>
-                            <span class="ms-1 d-none d-lg-inline-block">Theme</span>
+                            <span class="ms-1 d-none d-lg-inline-block">Mode</span>
                         </button>
                     </li>
                     {% if user.is_authenticated %}
@@ -126,7 +126,29 @@
     <!-- Footer -->
     <footer class="text-white py-4">
         <div class="container text-center">
-            <p class="mb-0">&copy; {% now "Y" %} Système de Réservation. Tous droits réservés.</p>
+            <p>&copy; {% now "Y" %} EasyRoom - Système de Réservation. Tous droits réservés.</p>
+            
+            <div class="footer-links">
+                <a href="#" class="text-white">À propos</a>
+                <a href="#" class="text-white">Conditions d'utilisation</a>
+                <a href="#" class="text-white">Politique de confidentialité</a>
+                <a href="#" class="text-white">Contact</a>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#" class="social-icon" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
         </div>
     </footer>
 
