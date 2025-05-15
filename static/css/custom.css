@@ -169,7 +169,7 @@ body::before {
     }
 }
 
-/* Theme Toggle Button */
+/* Theme Toggle Button - Original Style (Now Hidden) */
 .theme-toggle {
     background: transparent;
     border: none;
@@ -186,6 +186,40 @@ body::before {
 
 .theme-toggle i {
     font-size: 1.2rem;
+}
+
+/* Fixed Position Theme Toggle Button in Top Right Corner */
+.theme-toggle-fixed {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1030; /* Above most elements but below modals */
+    background-color: var(--primary-color);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-fixed:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.theme-toggle-fixed i {
+    font-size: 1.1rem;
+}
+
+[data-theme="dark"] .theme-toggle-fixed {
+    background-color: #ffc107; /* Gold/yellow color for dark mode */
+    color: #121c2e;
 }
 
 /* Card Styles */
