@@ -35,8 +35,8 @@ def download_and_save_image(url, room, index):
         else:
             print(f"Failed to download image: {response.status_code}")
             return False
-    except Exception as e:
-        print(f"Error downloading image: {e}")
+    except Exception as download_error:
+        print(f"Error downloading image: {download_error}")
         return False
 
 # Main function to add images to rooms
@@ -49,10 +49,10 @@ def add_images_to_rooms():
     
     print(f"Found {rooms.count()} rooms. Adding images...")
     
-    for i, room in enumerate(rooms):
+    for room_index, room in enumerate(rooms):
         # Use modulo to cycle through available images if we have more rooms than images
-        image_url = image_urls[i % len(image_urls)]
-        download_and_save_image(image_url, room, i)
+        image_url = image_urls[room_index % len(image_urls)]
+        download_and_save_image(image_url, room, room_index)
 
 if __name__ == "__main__":
     add_images_to_rooms()
