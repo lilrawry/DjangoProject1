@@ -34,8 +34,8 @@ def download_image(url, room, index):
         else:
             print(f"Failed to download image: {response.status_code}")
             return False
-    except Exception as e:
-        print(f"Error downloading image: {e}")
+    except Exception as download_error:
+        print(f"Error downloading image: {download_error}")
         return False
 
 def update_existing_room_images():
@@ -48,13 +48,13 @@ def update_existing_room_images():
     
     print(f"Found {rooms.count()} rooms. Checking for missing images...")
     
-    for i, room in enumerate(rooms):
+    for room_index, room in enumerate(rooms):
         # Check if room has an image
         if not room.image or not room.image.name:
             print(f"Room '{room.name}' has no image. Adding one...")
             # Use modulo to cycle through available images if we have more rooms than images
-            image_url = image_urls[i % len(image_urls)]
-            download_image(image_url, room, i)
+            image_url = image_urls[room_index % len(image_urls)]
+            download_image(image_url, room, room_index)
         else:
             print(f"Room '{room.name}' already has an image.")
 

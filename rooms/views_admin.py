@@ -39,12 +39,12 @@ def add_room(request):
     return render(request, 'rooms/admin_room_form.html', context)
 
 @login_required
-def edit_room(request, pk):
+def edit_room(request, room_id):
     if not request.user.is_staff:
         messages.error(request, "Accès non autorisé.")
         return redirect('rooms:room_list')
     
-    room = get_object_or_404(Room, pk=pk)
+    room = get_object_or_404(Room, pk=room_id)
     
     if request.method == 'POST':
         form = RoomForm(request.POST, instance=room)
@@ -63,12 +63,12 @@ def edit_room(request, pk):
     return render(request, 'rooms/admin_room_form.html', context)
 
 @login_required
-def delete_room(request, pk):
+def delete_room(request, room_id):
     if not request.user.is_staff:
         messages.error(request, "Accès non autorisé.")
         return redirect('rooms:room_list')
     
-    room = get_object_or_404(Room, pk=pk)
+    room = get_object_or_404(Room, pk=room_id)
     
     if request.method == 'POST':
         room.delete()

@@ -26,8 +26,8 @@ def download_image(url, room, index):
         else:
             print(f"Failed to download image: {response.status_code}")
             return False
-    except Exception as e:
-        print(f"Error downloading image: {e}")
+    except Exception as download_error:
+        print(f"Error downloading image: {download_error}")
         return False
 
 def create_sample_rooms():
@@ -80,15 +80,15 @@ def create_sample_rooms():
         ]
         
         created_rooms = []
-        for i, room_data in enumerate(rooms_data):
+        for room_index, room_data in enumerate(rooms_data):
             # Create the room
             room = Room.objects.create(**room_data)
             created_rooms.append(room)
             print(f"Created room: {room_data['name']}")
             
             # Try to download and attach image
-            if i < len(image_urls):
-                download_image(image_urls[i], room, i)
+            if room_index < len(image_urls):
+                download_image(image_urls[room_index], room, room_index)
         
         print(f"Created {len(created_rooms)} sample rooms")
     else:

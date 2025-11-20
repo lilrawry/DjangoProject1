@@ -110,14 +110,14 @@ def room_list(request):
         }
         
         return render(request, 'rooms/room_list.html', context)
-    except Exception as e:
-        logger.error(f"Error in room_list view: {str(e)}")
+    except Exception as error:
+        logger.error(f"Error in room_list view: {str(error)}")
         return HttpResponseServerError("Une erreur s'est produite lors du chargement de la page.")
 
 @login_required
-def room_detail(request, pk):
+def room_detail(request, room_id):
     try:
-        room = get_object_or_404(Room, pk=pk)
+        room = get_object_or_404(Room, pk=room_id)
         min_date_time = timezone.now()
         
         if request.method == 'POST':
@@ -133,8 +133,8 @@ def room_detail(request, pk):
                     reservation.save()
                     messages.success(request, 'Réservation effectuée avec succès!')
                     return redirect('rooms:process_payment', reservation_id=reservation.id)
-                except Exception as e:
-                    logger.error(f"Error saving reservation: {str(e)}")
+                except Exception as save_error:
+                    logger.error(f"Error saving reservation: {str(save_error)}")
                     messages.error(request, 'Une erreur est survenue lors de la réservation.')
         else:
             initial_start = timezone.now().replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
@@ -148,8 +148,8 @@ def room_detail(request, pk):
         }
         
         return render(request, 'rooms/room_detail.html', context)
-    except Exception as e:
-        logger.error(f"Error in room_detail view: {str(e)}")
+    except Exception as error:
+        logger.error(f"Error in room_detail view: {str(error)}")
         return HttpResponseServerError("Une erreur s'est produite lors du chargement de la page.")
 
 @login_required
@@ -189,8 +189,8 @@ def my_reservations(request):
     return render(request, 'rooms/my_reservations.html', context)
 
 @login_required
-def cancel_reservation(request, pk):
-    reservation = get_object_or_404(Reservation, pk=pk, user=request.user)
+def cancel_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, pk=reservation_id, user=request.user)
     if reservation.status != 'confirmed':
         reservation.status = 'cancelled'
         reservation.save()
@@ -218,8 +218,8 @@ def download_pdf(request, reservation_id):
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
         
         return response
-    except Exception as e:
-        logger.error(f"Error generating PDF: {str(e)}")
+    except Exception as error:
+        logger.error(f"Error generating PDF: {str(error)}")
         messages.error(request, "Une erreur est survenue lors de la génération du PDF.")
         return redirect('rooms:my_reservations')
 
@@ -426,8 +426,8 @@ def import_rooms_csv(request):
                         else:
                             rooms_updated += 1
                     
-                    except Exception as e:
-                        logger.error(f"Error importing room: {str(e)}")
+                    except Exception as import_error:
+                        logger.error(f"Error importing room: {str(import_error)}")
                         errors += 1
                 
                 # Show results
@@ -439,9 +439,9 @@ def import_rooms_csv(request):
                 else:
                     messages.warning(request, 'Aucune salle n\'a été importée.')
         
-        except Exception as e:
-            logger.error(f"Error processing CSV file: {str(e)}")
-            messages.error(request, f'Erreur lors du traitement du fichier: {str(e)}')
+        except Exception as csv_error:
+            logger.error(f"Error processing CSV file: {str(csv_error)}")
+            messages.error(request, f'Erreur lors du traitement du fichier: {str(csv_error)}')
         
         finally:
             # Clean up the temporary file
@@ -512,8 +512,8 @@ def preview_csv_import(request):
                     return redirect('rooms:admin_dashboard')
                 
                 # Preview first 10 rows
-                for i, row in enumerate(reader):
-                    if i >= 10:  # Limit preview to 10 rows
+                for row_index, row in enumerate(reader):
+                    if row_index >= 10:  # Limit preview to 10 rows
                         break
                     
                     # Validate row
@@ -525,7 +525,7 @@ def preview_csv_import(request):
                     })
                     
                     if not is_valid:
-                        validation_errors.append(f"Ligne {i+2}: {error_message}")
+                        validation_errors.append(f"Ligne {row_index+2}: {error_message}")
             
             # Store the file path in session for later import
             request.session['csv_import_path'] = file_path
@@ -540,9 +540,9 @@ def preview_csv_import(request):
             
             return render(request, 'rooms/preview_import.html', context)
         
-        except Exception as e:
-            logger.error(f"Error previewing CSV file: {str(e)}")
-            messages.error(request, f'Erreur lors de l\'aperçu du fichier: {str(e)}')
+        except Exception as preview_error:
+            logger.error(f"Error previewing CSV file: {str(preview_error)}")
+            messages.error(request, f'Erreur lors de l\'aperçu du fichier: {str(preview_error)}')
             default_storage.delete(file_path)
     
     return redirect('rooms:admin_dashboard')

@@ -7,7 +7,7 @@ from io import BytesIO
 from datetime import datetime
 from django.db.models import Q
 
-def get_available_rooms(room, start_time, end_time):
+def is_room_available(room, start_time, end_time):
     """
     Check if a room is available for a specific time period
     """
@@ -69,14 +69,14 @@ def generate_reservation_receipt(reservation):
         font_family = 'Roboto'
         bold_font = 'RobotoBold'
         light_font = 'RobotoLight'
-    except:
+    except Exception as font_error:
         # Fallback to standard fonts if custom ones aren't available
         font_family = 'Helvetica'
         bold_font = 'Helvetica-Bold'
         light_font = 'Helvetica'
     
     buffer = BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=letter, 
+    pdf_document = SimpleDocTemplate(buffer, pagesize=letter, 
                           leftMargin=0.7*cm, rightMargin=0.7*cm,
                           topMargin=0.7*cm, bottomMargin=0.7*cm)
     styles = getSampleStyleSheet()
@@ -154,8 +154,8 @@ def generate_reservation_receipt(reservation):
             logo.hAlign = 'CENTER'  # Center the logo
             story.append(logo)
             story.append(Spacer(1, 0.5*cm))  # Add some space after logo
-    except Exception as e:
-        print(f"Error adding logo: {e}")  # For debugging
+    except Exception as logo_error:
+        print(f"Error adding logo: {logo_error}")  # For debugging
         pass  # Skip if logo not available
     
     # Add title
@@ -235,19 +235,19 @@ def generate_reservation_receipt(reservation):
     try:
         # Create the verification URL - adjust based on your URL structure
         verification_url = f"{settings.SITE_URL}{reverse('rooms:download_pdf', args=[reservation.id])}"
-        qr = qrcode.QRCode(
+        qr_code = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
             box_size=10,
             border=4,
         )
-        qr.add_data(verification_url)
-        qr.make(fit=True)
+        qr_code.add_data(verification_url)
+        qr_code.make(fit=True)
         
         # Create QR code image
-        qr_img = qr.make_image(fill_color="black", back_color="white")
+        qr_code_image = qr_code.make_image(fill_color="black", back_color="white")
         qr_buffer = BytesIO()
-        qr_img.save(qr_buffer)
+        qr_code_image.save(qr_buffer)
         qr_buffer.seek(0)
         
         # Create a more compact layout with QR code and text side by side
@@ -266,7 +266,7 @@ def generate_reservation_receipt(reservation):
         ]))
         
         story.append(qr_table)
-    except Exception as e:
+    except Exception as qr_error:
         # Fallback if QR code generation fails
         story.append(Paragraph(f"ID de vérification: {reservation.id}", normal_style))
     
@@ -292,7 +292,7 @@ def generate_reservation_receipt(reservation):
     story.append(Paragraph(footer_text, footer_style))
     
     # Build the PDF
-    doc.build(story)
+    pdf_document.build(story)
     pdf = buffer.getvalue()
     buffer.close()
     
